@@ -33,7 +33,7 @@ body {
     cursor: pointer;
 }
 
-#global-input {
+.global-input {
     width: 100%;
     padding: 20px;
     border-radius: 0.7rem;
