@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddEditForm from "./AddEditForm";
 import styles from "./AddEditForm.module.css";
+import supabase from "../../../supabase";
 
 
 
@@ -15,10 +16,48 @@ const AddForms: React.FC = () => {
     const [expenseAmount, setExpenseAmount] = useState<number>()
     const [selectCategory, setSelectCategory] = useState<number>()
 
+    // Usestate for JWT token and users ID
+    const [userToken, setUserToken] = useState<string | null>(null);
+    const [userId, setUserId] = useState<string | null>(null);
 
-    // Haetaan käyttäjän id localStoragesta
-    const userId = localStorage.getItem("user_id");
 
+
+
+    // Check users JWT token
+    useEffect(() => {
+        // Get the JWT token from Supabase
+        const fetchAuthToken = async () => {
+            const {
+                data: { session },
+                error,
+            } = await supabase.auth.getSession();
+
+            if (error) {
+                console.error("Error fetching the session: ", error);
+                return;
+            }
+
+            if (session) {
+                setUserToken(session.access_token);
+                // Get the user id
+                try {
+                    const { data: { user }, error: userError } = await supabase.auth.getUser(session.access_token);
+                    if (userError) {
+                        throw userError;
+                    }
+                    setUserId(user?.id || null);
+                } catch (userFetchError) {
+                    console.error("Error fetching user ID:", userFetchError);
+                }
+            } else {
+                console.error("No token found. User might have to log in.")
+            }
+        };
+
+        fetchAuthToken();
+    }, []);
+
+    /* HANDLE FUNCTIONS */
     // Funktio incomeNote-muuttujan päivittämiseen
     const handleNoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setIncomeNote(e.target.value);
@@ -49,47 +88,43 @@ const AddForms: React.FC = () => {
         const value = parseInt(e.target.value); // Muutetaan valittu arvo numeroksi
         setSelectCategory(isNaN(value) ? undefined : value); // Asetetaan undefined, jos valinta ei ole luku
     };
-    
 
 
-    
-
-    // Funktio datan lähettämiseen back-endille Expense-firmin kautta
     const submitFormExpense = async (e: React.FormEvent) => {
+        //e.preventDefault(); // Estetään oletustoiminto
 
-        // Ei sittenkään estetä sivun päivittämistä, sillä yläosan tiedot tulee päivittää
-        //e.preventDefault();
-
-        // Kasataan lähetettävä data 
-        if (userId) {
-            const sentData = {
-                user_id: userId,
-                category_id: selectCategory,
-                expense_amount: expenseAmount,
-                note: expenseNote,
-            };
-
-            try {
-                const responseIncome = await fetch("http://127.0.0.1:5000/expense/postgres", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(sentData),
-                });
-
-                if (!responseIncome.ok) {
-                    throw new Error("Expenseä ei pystytty lisäämään.");
-                }
-
-                // Tyhjennetään kentät lomakkeen lähettämisen jälkeen
-                setExpenseNote("");
-                setExpenseAmount(undefined); // Resetoi amount kenttä
-            } catch (error) {
-                console.error("Error: ", error);
-            }
+        if (!userToken) {
+            console.error("No user token found. Function can not be implemented.")
+            return;
         }
-    }
+
+        try {
+            // Add the new data to the database
+            const { error } = await supabase
+                .from("expenses")
+                .insert([
+                    {
+                        userid: userId,
+                        categoryid: selectCategory,
+                        amount: expenseAmount,
+                        description: expenseNote,
+                        createdat: new Date(),
+                    },
+                ]);
+
+            if (error) {
+                throw error;
+            }
+
+            // Empty data from the useStates
+            setExpenseNote("");
+            setExpenseAmount(undefined);
+            setSelectCategory(undefined);
+        } catch (error) {
+            console.error("Error while adding expense: ", error);
+        }
+    };
+
 
     // Funktio datan lähettämiseen back-endille Income-formin kautta
     const submitFormIncome = async (e: React.FormEvent) => {
@@ -97,69 +132,68 @@ const AddForms: React.FC = () => {
         // Ei sittenkään estetä sivun päivittämistä, sillä yläosan tiedot tulee päivittää
         //e.preventDefault();
 
-        // Kasataan lähetettävä data 
-        if (userId) {
-            const sentData = {
-                user_id: userId,
-                income_amount: incomeAmount,
-                note: incomeNote,
-            };
-
-            try {
-                const responseIncome = await fetch("http://127.0.0.1:5000/income/postgres", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(sentData),
-                });
-
-                if (!responseIncome.ok) {
-                    throw new Error("Incomea ei pystytty lisäämään.");
-                }
-
-                // Tyhjennetään kentät lomakkeen lähettämisen jälkeen
-                setIncomeNote("");
-                setIncomeAmount(undefined); // Resetoi amount kenttä
-            } catch (error) {
-                console.error("Error: ", error);
-            }
+        if (!userToken) {
+            console.error("No user token found. Function can not be implemented.")
+            return;
         }
-    }
+
+        try {
+            const { error } = await supabase
+                .from("incomes")
+                .insert([
+                    {
+                        userid: userId,
+                        amount: incomeAmount,
+                        description: incomeNote,
+                        createdat: new Date(),
+                    }
+                ]);
+            
+                if (error) {
+                    throw error;
+                };
+
+                // Empty states
+                setIncomeAmount(undefined);
+                setIncomeNote("");
+        } catch (error) {
+            console.error("Error while adding expense: ", error);
+        }
+    };
 
 
 
     return (
         <div className={styles.formBackground}>
             <div className={styles.formContainer}>
-                <AddEditForm 
-                    formTitle={"Expenses"} 
-                    noteName={"note"} 
-                    noteValue={expenseNote} 
-                    amountName={"amount"} 
-                    amountValue={expenseAmount !== undefined ? expenseAmount.toString() : ""} 
-                    buttonText={"Add Expenses"} 
-                    noteChange={handleExpenseNoteChange} 
+                <AddEditForm
+                    formTitle={"Expenses"}
+                    noteName={"Description"}
+                    noteValue={expenseNote}
+                    amountName={"Amount"}
+                    amountValue={expenseAmount !== undefined ? expenseAmount.toString() : ""}
+                    buttonText={"Add Expenses"}
+                    noteChange={handleExpenseNoteChange}
                     amountChange={handleExpenseAmountChange}
                     selectChange={handleSelectChange} // Selecting change
                     onButtonClick={function (): void {
-                    throw new Error("Function not implemented.");
-                    }} 
+                        throw new Error("Function not implemented.");
+                    }}
                     onSubmit={submitFormExpense}
                 />
-                <AddEditForm 
-                    formTitle={"Income"} 
-                    noteName={"note"} 
-                    noteValue={incomeNote} 
-                    amountName={"income_amount"} 
+                <AddEditForm
+                    formTitle={"Income"}
+                    noteName={"Description"}
+                    noteValue={incomeNote}
+                    amountName={"Amount"}
                     amountValue={incomeAmount !== undefined ? incomeAmount.toString() : ""} // Muutetaan takaisin string-muoton. Jos ei ole undefined tämä on määritetty arvo 
-                    buttonText={"Add Income"} 
-                    noteChange={handleNoteChange} 
-                    amountChange={handleAmountChange} 
-                    selectChange={() => {}} // Selectin change 
+                    buttonText={"Add Income"}
+                    noteChange={handleNoteChange}
+                    amountChange={handleAmountChange}
+                    selectChange={() => { }} // Selectin change 
                     onButtonClick={function (): void {
-                    throw new Error("Function not implemented."); // Tarvitaanko tätä??
-                    }} 
+                        throw new Error("Function not implemented."); // Tarvitaanko tätä??
+                    }}
                     onSubmit={submitFormIncome}
                 />
 

@@ -5,85 +5,88 @@ import TotalCards from "../../components/TotalCards/TotalCards";
 import AddForms from "../../components/AddEditForm/AddForms";
 // Styling
 import styles from "./Home.module.css";
+import supabase from "../../../supabase";
 
 const Home: React.FC = () => {
-  // Tilamuuttujat TotalCard-komponenteille
+  // UseStates
   const [incomeTotal, setIncomeTotal] = useState<number>(0);
-  const [expenseTotal, setExpenseTotal] = useState<number>(0); // Korjattu muuttujan nimi
+  const [expenseTotal, setExpenseTotal] = useState<number>(0);
 
   useEffect(() => {
-    // Tämä koodi suoritetaan, kun komponentti ladataan
 
-    // Back-endille tulee lähettää id
-    const userId = localStorage.getItem('user_id');
+    const checkUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
 
-    const fetchIncomeData = async () => {
-      try {
-        const incomeResponse = await fetch(`http://127.0.0.1:5000/income/postgres/${userId}`, { // Korjattu template literal
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json', // Oikea kirjoitusasu
-          },
-        });
-
-        if (!incomeResponse.ok) {
-          throw new Error('Back-end -yhteydessä on ongelma.');
-        }
-
-        const incomeData = await incomeResponse.json();
-        setIncomeTotal(incomeData.total_income); 
-
-        console.log("IncomeData: ", incomeData);
-      } catch (error) {
-        console.error("Virhe tiedon haussa:", error);
+      if (user) {
+        // User is signed in
+        fetchIncomeTotal();
+        fetchExpenseTotal();
+      } else {
+        // No user is signed in
+        console.log('User is not signed in');
       }
     };
 
-    fetchIncomeData(); // Kutsu asynkronista funktiota
+    checkUser();
 
-    // Haetaan expense data
-    const fetchExpenseData = async () => {
+    // Get total income
+    const fetchIncomeTotal = async () => {
       try {
-        const expenseResponse = await fetch(`http://127.0.0.1:5000/expense/postgres/${userId}`, { // Korjattu template literal
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json', // Oikea kirjoitusasu
-          },
-        });
+        const { data, error } = await supabase
+          .from('incomes')
+          .select('amount')
 
-        if (!expenseResponse.ok) {
-          throw new Error('Back-end -yhteydessä on ongelma.');
+        if (error) {
+          throw error;
         }
 
-        const expenseData = await expenseResponse.json();
-        setExpenseTotal(expenseData.total_expense); 
+        const totalIncome = data.reduce((acc, item) => acc + item.amount, 0);
 
-        console.log("ExpenseData: ", expenseData);
+        setIncomeTotal(totalIncome);
       } catch (error) {
-        console.error("Virhe tiedon haussa:", error);
+        console.error('Error fetching income data:', error);
       }
     };
 
-    fetchExpenseData(); // Kutsu asynkronista funktiota
+    // Get total expense
+    const fetchExpenseTotal = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('expenses')
+          .select('amount')
 
-  }, []); // Tyhjät riippuvuudet varmistavat, että tämä suoritetaan vain kerran
+        if (error) {
+          throw error;
+        }
+
+        const totalExpense = data.reduce((acc, item) => acc + item.amount, 0);
+
+        setExpenseTotal(totalExpense);
+      } catch (error) {
+        console.error('Error fetching expense data:', error);
+      }
+    };
+
+
+  }, []);
 
   return (
     <div>
-      <Hero 
-        heroTitle={"Expense Tracker"} 
-        titleTag={"Welcome to track your income and expenses to better your budgeting."} 
+      <Hero
+        heroTitle={"Expense Tracker"}
+        titleTag={"Welcome to track your income and expenses to better your budgeting."}
       />
-      {/* Mieti vielä totalCardien tulostusta */}
+      {/* Monthly total amounts */}
       <div className={styles.totalCardsContainer}>
         <TotalCards totalCardTitle={"Income"} totalCardAmount={incomeTotal} />
         <TotalCards totalCardTitle={"Total"} totalCardAmount={parseFloat((incomeTotal - expenseTotal).toFixed(2))} />
         <TotalCards totalCardTitle={"Expenses"} totalCardAmount={expenseTotal} />
       </div>
-      {/* Add forms home screenillä */}
+      {/* Add incomes and expenses */}
       <div className={styles.addFormContainer}>
         <AddForms />
       </div>
+      { /* Navigation component */ }
       <NavContainer
         navigateToFirstRoute="/balance"
         navigateToSecondRoute="/contact"

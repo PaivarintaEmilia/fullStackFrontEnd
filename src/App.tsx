@@ -6,6 +6,7 @@ import Balance from './pages/balance/Balance';
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
 import Authentication from "./pages/Authentication/Authentication";
+import Register from "./pages/register/Register";
 
 
 const App: React.FC = () => {
@@ -15,7 +16,8 @@ const App: React.FC = () => {
       <Router> {/* Router-komponentti määrittää reitityksen juuren */}
         <Header />
         <Routes> {/* Routes-konteineri sisältää yksittäiset reitit */}
-          <Route path="/" element={<Authentication />} /> {/* Oletusreitti Authentication-komponentille*/}
+          <Route path="/" element={<Authentication />} /> {/* Oletusreitti Authentication-komponentille. Tällä hetkellä vielä register.*/}
+          <Route path="/register" element={<Register />} /> {/* Oletusreitti Authentication-komponentille. Tällä hetkellä vielä register.*/}
           <Route path="/home" element={<Home />} /> {/* Oletusreitti HomePage-komponentille*/}
           <Route path="/balance" element={<Balance />} /> {/* Reitti Balance-komponentille */}
         </Routes>

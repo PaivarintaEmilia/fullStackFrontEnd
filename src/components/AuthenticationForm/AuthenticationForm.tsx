@@ -6,49 +6,51 @@ import style from "./AuthenticationForm.module.css";
 interface AuthenticateFormProps {
     title: string,
     onSubmit: (event: React.FormEvent) => Promise<void>, // Tämä tyypitys, koska onSubmitissa on tämänlaisen argumentin vastaan
-    onChangeUsername: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    onChangeEmail: (e: React.ChangeEvent<HTMLInputElement>) => void,
     onChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    valueUsername: string,
+    valueEmail: string,
     valuePassword: string,
     text: string
+    onGoogleFunctionality: () => void;
 }
 
 const AuthenticationForm: React.FC<AuthenticateFormProps> = ({
     title,
     onSubmit,
-    onChangeUsername,
+    onChangeEmail,
     onChangePassword,
-    valueUsername,
+    valueEmail,
     valuePassword,
     text,
+    onGoogleFunctionality
 }) => {
 
-
-    
 
     return (
         <div className={style.authenticationFormContainer}>
             <form onSubmit={onSubmit}>
                 <h2>{title}</h2>
+                {/* Email Input */}
                 <InputField
-                    name='username'
+                    name='email'
                     type='text'
-                    placeholder='Enter username'
-                    value={valueUsername}
-                    className=''
-                    id='global-input'
-                    onChange={onChangeUsername}
+                    placeholder='Enter email'
+                    value={valueEmail}
+                    className='global-input'
+                    id=''
+                    onChange={onChangeEmail}
                 />
+                {/* Password Input */}
                 <InputField
                     name='password'
                     type='password'
                     placeholder='Create password'
                     value={valuePassword}
-                    className=''
-                    id='global-input' // TODO: ei voi olla kahta komponenttia samalla id:llä.
+                    className='global-input'
+                    id='' 
                     onChange={onChangePassword}
                 />
-
+                {/* Submit button */}
                 <ButtonComponent
                     name=''
                     type='submit'
@@ -56,7 +58,8 @@ const AuthenticationForm: React.FC<AuthenticateFormProps> = ({
                     className=''
                     id='global-btn'
                     text={text}
-                    onClick={() => console.log("Todo määritä tämä myöhemmin tai muokkaa niin ettei tarvita.")} />
+                    onClick={() => {}} />
+                {/* Google Authentication button */}
                 <ButtonComponent
                     name=''
                     type='button'
@@ -64,12 +67,8 @@ const AuthenticationForm: React.FC<AuthenticateFormProps> = ({
                     className={style.googleBtn}
                     id=''
                     text='Google Auth.'
-                    onClick={function (): void {
-                        throw new Error('Function not implemented.');
-                    }} />
-
+                    onClick={onGoogleFunctionality} />
             </form>
-
         </div>
     );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ButtonComponent from "../../common/Button";
 import InputField from "../../common/InputField";
 import Select from "../../common/Select";
+import supabase from "../../../supabase";
 
 interface AddEditFormProps {
     formTitle: string;
@@ -37,62 +38,33 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
     const [options, setOptions] = useState<{ category_id: number; category_name: string }[]>([]); 
 
 
-    // Luodaan useEffect, joka ajetaan kerran sivuston latautuessa. 
-    // Tällä haetaan tarvittavat tiedot select-komponentin Category-listausta varten
     useEffect(() => {
-
-        // Haetaan categories back-endin puolelta
         const fetchCategories = async () => {
-
-            // Haetaan user_id localStoragesta
-            const userId = localStorage.getItem('user_id');
-
-            // Otetaan yhteys back-endiin
-            if (userId) {
-                try {
-
-                    const response = await fetch(`http://127.0.0.1:5000/expensecategory/postgres/${userId}`, { 
-                        method: 'GET',
-                        headers: {
-                          'Content-Type': 'application/json', 
-                        },
-                    });
-
-                    if (!response.ok) {
-                        throw new Error("Categories fetching failed.");
-                    }
-
-                    // Otetaan back-endin vastaus talteen
-                    const data = await response.json();
-
-                    // Muutetaan data oikeaan muotoon
-                    setOptions(data["Category_listing"].map((category: {categoryId: number; categoryName: string }) => ({
-                        category_id: category.categoryId,
-                        category_name: category.categoryName
-                    })));
-
-                } catch (error) {
-                    console.error("Error connecting to database and fetching categories: ", error);
+            try {
+                const { data, error } = await supabase
+                    .from('categories')
+                    .select('id, name');
+                
+                if (error) {
+                    throw error;
                 }
+    
+                setOptions(data.map((category) => ({
+                    category_id: category.id,
+                    category_name: category.name
+                })));
+            } catch (error) {
+                console.error("Error fetching categories:", error);
             }
         };
-
+    
         fetchCategories();
     }, []);
-
-
-
-
-
-
-
-
+    
 
     return (
         <div>
-
             <div >
-
                 <form onSubmit={onSubmit}>
                     <h3>{formTitle}</h3>
                     <InputField
@@ -100,27 +72,26 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
                         type={"text"}
                         placeholder={"Note"}
                         value={noteValue}
-                        className={""}
+                        className={"global-input"}
                         id={"global-input"}
                         onChange={noteChange}
                     />
-                    {/* TODO: Select tulee piilottaa tietyissä tapauksissa. Määrittele tämä myöhemmin. TOIMII */}
+                    {/* This element is only shown with using Expense forms. */}
                     {formTitle !== "Income" &&
                         <Select
                             options={options}
                             onChange={selectChange}
-                            placeholder={"Choose Expense Category"}
+                            placeholder={"Choose Expense Categoryxx"}
                             id="global-select"
                             className={""}
                         />
                     }
-
                     <InputField
                         name={amountName}
                         type={"number"}
                         placeholder={"Amount"}
                         value={amountValue}
-                        className={""}
+                        className={"global-input"}
                         id={"global-input"}
                         onChange={amountChange}
                     />
@@ -133,13 +104,8 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
                         text={buttonText}
                         onClick={onButtonClick}
                     />
-
-
                 </form>
-
             </div>
-
-
         </div>
     );
 }

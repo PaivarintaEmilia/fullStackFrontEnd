@@ -14,7 +14,7 @@ const Select: React.FC<SelectProps> = ({ options, onChange, placeholder, id, cla
 
     return (
         <select onChange={onChange} defaultValue="" id={id} className={className}>
-            <option value="" disabled>{placeholder}</option>
+            {/*TODO: Do we need a placeholder? <option value="" disabled>{placeholder}</option>*/}
             {options.map(option => (
                 <option key={option.category_id} value={option.category_id}>
                     {option.category_name}

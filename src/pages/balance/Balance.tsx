@@ -27,7 +27,10 @@ const Balance: React.FC = ({
         <DataCard title={"Salary"} totalAmount={1500} />
       </div>
 
+      {/* Section for adding incomes and expenses. */}
       <AddForms />
+
+      {/* Section for navigation. */}
       <NavContainer 
         navigateToFirstRoute="/home" 
         navigateToSecondRoute={"/balance"} 
