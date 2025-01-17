@@ -15,7 +15,7 @@ const Header: React.FC = () => {
     const location = useLocation(); // Hae nykyinen sijainti
 
     const navigateLogin = () => {
-        navigate('/login');
+        navigate('/');
     };
 
     const navigateRegister = () => {
@@ -65,7 +65,7 @@ const Header: React.FC = () => {
                         text="Login"
                     />
                 }
-                {!(location.pathname === '/login' || location.pathname === '/register') &&
+                {!(location.pathname === '/' || location.pathname === '/register') &&
                     <ButtonComponent
                         name="Logout"
                         type="button"
