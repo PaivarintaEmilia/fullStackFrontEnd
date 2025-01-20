@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 // Styling
 import styles from "./EditIncome.module.css";
-import supabase from "../../../supabase";
 import EditIncomeForm from "../../components/AddEditForm/EditIncomeForm";
 
 const EditIncome: React.FC = () => {

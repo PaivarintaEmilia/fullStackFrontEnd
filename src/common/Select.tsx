@@ -4,13 +4,12 @@ import React from "react";
 interface SelectProps {
     options: { category_id: number; category_name: string }[];
     onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    placeholder: string;
     id: string;
     className: string,
 }
 
 
-const Select: React.FC<SelectProps> = ({ options, onChange, placeholder, id, className }) => {
+const Select: React.FC<SelectProps> = ({ options, onChange, id, className }) => {
 
     return (
         <select onChange={onChange} defaultValue="" id={id} className={className}>

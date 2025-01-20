@@ -8,7 +8,6 @@ import Footer from "./components/Footer/Footer";
 import Authentication from "./pages/Authentication/Authentication";
 import Register from "./pages/register/Register";
 import EditIncome from "./pages/editIncome/EditIncome";
-import DeletePopUp from "./components/PopUp/PopUp";
 
 
 const App: React.FC = () => {

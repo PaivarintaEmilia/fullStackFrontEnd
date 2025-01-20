@@ -20,7 +20,7 @@ const Register: React.FC = () => {
     event.preventDefault();
     setError(null);
 
-    let { data, error } = await supabase.auth.signUp({
+    let { error } = await supabase.auth.signUp({
       email: email,
       password: password
     })

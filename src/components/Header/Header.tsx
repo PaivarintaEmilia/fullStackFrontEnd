@@ -22,13 +22,10 @@ const Header: React.FC = () => {
         navigate('/register');
     };
 
-    const navigateLogout = () => {
-        navigate('/logout');
-    };
-
     // LogOut
     async function signOut() {
         const { error } = await supabase.auth.signOut()
+        console.error("Error while signing out: ", error)
         navigate('/');
     }
 
