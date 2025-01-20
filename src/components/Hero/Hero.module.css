@@ -15,12 +15,50 @@
     justify-content: center;
     align-items: center;
 }
+
 .textContainer h1 {
     font-size: 3rem;
     font-weight: 500;
 }
+
 .textContainer h2 {
     font-size: 1.2rem;
     font-weight: 300;
     margin-bottom: 15px;
 }
+
+
+/* Tablet */
+@media only screen and (max-width: 768px) {
+    .HeroContainer {
+        height: 50vh;   
+    }
+
+    .textContainer {
+        text-align: center;
+        width: 60%;
+    }
+  }
+
+
+/* Mobile */
+@media only screen and (max-width: 480px) {
+    .HeroContainer {
+        height: 50vh;   
+    }
+
+    .textContainer {
+        text-align: center;
+        width: 80%;
+    }
+
+    .textContainer h1 {
+        font-size: 2rem;
+        font-weight: 500;
+    }
+
+    .textContainer h2 {
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+  }
