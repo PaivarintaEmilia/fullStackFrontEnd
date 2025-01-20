@@ -6,6 +6,8 @@ import DataCardItemList from "./DataCardItemList";
 interface DataCardProps {
     title: string;
     totalAmount: number;
+    // DataCardListing komponentille vietävä data
+    items: { id: number; description: string; amount: number }[];
 }
 
 
@@ -13,9 +15,8 @@ interface DataCardProps {
 const DataCard: React.FC<DataCardProps> = ({
     title,
     totalAmount,
+    items
 }) => {
-
-
 
     return (
         <div className={styles.dataCardContainer}>
@@ -23,7 +24,7 @@ const DataCard: React.FC<DataCardProps> = ({
                 <h3>{title}</h3>
                 <p>{totalAmount}€</p>
             </div>
-            <DataCardItemList />
+            <DataCardItemList items={items} />
 
         </div>
     );
