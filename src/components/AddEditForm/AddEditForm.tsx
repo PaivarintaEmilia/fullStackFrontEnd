@@ -77,7 +77,7 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
                         onChange={noteChange}
                     />
                     {/* This element is only shown with using Expense forms. */}
-                    {formTitle !== "Income" &&
+                    {!(formTitle == "Income" || formTitle == "Edit Income") &&
                         <Select
                             options={options}
                             onChange={selectChange}

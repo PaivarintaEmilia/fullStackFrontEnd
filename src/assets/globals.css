@@ -33,6 +33,30 @@ body {
     cursor: pointer;
 }
 
+.global-btn {
+    width: 9rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: 3.1875rem;
+    background: linear-gradient(90deg, #6145B4 51%, rgba(97, 69, 180, 0.37) 100%);
+    backdrop-filter: blur(12.399999618530273px);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+/* Global btn black */
+.global-btn-black {
+    width: 9rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: 3.1875rem;
+    background: linear-gradient(90deg, #303030 51%, rgba(29, 27, 27, 0.37) 100%);
+    backdrop-filter: blur(12.399999618530273px);
+    color: white;
+    font-size: 1rem;
+}
+
 .global-input {
     width: 100%;
     padding: 20px;

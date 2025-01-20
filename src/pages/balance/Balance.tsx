@@ -6,6 +6,7 @@ import DataCard from "../../components/DataCards/DataCard";
 import styles from "./Balance.module.css";
 import supabase from "../../../supabase";
 import { useNavigate } from "react-router-dom";
+import DeletePopUp from "../../components/PopUp/PopUp";
 
 
 // Nämä ovat dataa jotka viedään eteenpäin alemmille komponenteille
@@ -36,12 +37,16 @@ const Balance: React.FC = ({
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
   // navigation
   const navigate = useNavigate();
+  // Delete functionalities
+  const [popupVisible, setPopupVisible] = useState<boolean>(false);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [deleteType, setDeleteType] = useState<"incomes" | "expenses">("incomes");
 
   // Check if user has logged in
   useEffect(() => {
     const checkUser = async () => {
       const { data: { user }, error } = await supabase.auth.getUser();
-      if ( error || !user ) {
+      if (error || !user) {
         console.error("User not authenticated: ", error);
         navigate("/");
       }
@@ -75,52 +80,64 @@ const Balance: React.FC = ({
   // Calculate total amount (income tällä hetkellä)
   const totalAmount = incomeData.reduce((sum, item) => sum + item.amount, 0);
 
- // Fetch expense data for the selected month and year
- useEffect(() => {
-  const fetchExpenseData = async () => {
-    // Check the user
-    const { data } = await supabase.auth.getUser();
-    if (!data?.user) return;
+  // Fetch expense data for the selected month and year
+  useEffect(() => {
+    const fetchExpenseData = async () => {
+      // Check the user
+      const { data } = await supabase.auth.getUser();
+      if (!data?.user) return;
 
-    //const { data: mo } = await supabase.auth.getUser();
-    //const userId = mo.user?.id;
+      //const { data: mo } = await supabase.auth.getUser();
+      //const userId = mo.user?.id;
 
-    const { data: expenseData, error: expenseError } = await supabase
-      .from("expenses")
-      .select("id, description, amount, categories(name)")
-      .eq("userid", data.user.id)
-      .gte("createdat", `${selectedYear}-${String(selectedMonth).padStart(2, "0")}-01`)
-      .lte("createdat", `${selectedYear}-${String(selectedMonth).padStart(2, "0")}-31`);
+      const { data: expenseData, error: expenseError } = await supabase
+        .from("expenses")
+        .select("id, description, amount, categories(name)")
+        .eq("userid", data.user.id)
+        .gte("createdat", `${selectedYear}-${String(selectedMonth).padStart(2, "0")}-01`)
+        .lte("createdat", `${selectedYear}-${String(selectedMonth).padStart(2, "0")}-31`);
 
-    if (expenseError) {
-      console.error("Error fetching expense data:", expenseError);
-    } else {
-      const groupedData = expenseData?.reduce((acc: any, item: any) => {
-        const category = item.categories.name;
-        if (!acc[category]) {
-          acc[category] = {
-            category,
-            totalAmount: 0,
-            items: []
-          };
-        }
-        acc[category].totalAmount += item.amount;
-        acc[category].items.push({
-          id: item.id,
-          description: item.description,
-          amount: item.amount,
-          category
-        });
-        return acc;
-      }, {});
+      if (expenseError) {
+        console.error("Error fetching expense data:", expenseError);
+      } else {
+        const groupedData = expenseData?.reduce((acc: any, item: any) => {
+          const category = item.categories.name;
+          if (!acc[category]) {
+            acc[category] = {
+              category,
+              totalAmount: 0,
+              items: []
+            };
+          }
+          acc[category].totalAmount += item.amount;
+          acc[category].items.push({
+            id: item.id,
+            description: item.description,
+            amount: item.amount,
+            category
+          });
+          return acc;
+        }, {});
 
-      setExpenseData(Object.values(groupedData || {}));
-    }
+        setExpenseData(Object.values(groupedData || {}));
+      }
+    };
+
+    fetchExpenseData();
+  }, [selectedMonth, selectedYear]);
+
+  // Delete functionalities
+  const handleDelete = (id: number, type: "incomes" | "expenses") => {
+    setPopupVisible(true); // Näyttää popupin
+    setDeleteId(id); // Asettaa poistettavan itemin ID:n
+    setDeleteType(type); // Tietää, poistetaanko incomes vai expenses
   };
 
-  fetchExpenseData();
-}, [selectedMonth, selectedYear]);
-
+  const closePopUp = () => {
+    setPopupVisible(false); // Sulkee popupin
+    setDeleteId(null); // Tyhjentää ID:n
+    setDeleteType("incomes"); // Resetoi oletustyypin
+  };
 
   return (
     <div>
@@ -137,6 +154,7 @@ const Balance: React.FC = ({
           <select
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(Number(e.target.value))}
+            className={styles.customSelect}
           >
             {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
               <option key={month} value={month}>
@@ -151,6 +169,7 @@ const Balance: React.FC = ({
           <select
             value={selectedYear}
             onChange={(e) => setSelectedYear(Number(e.target.value))}
+            className={styles.customSelect}
           >
             {Array.from({ length: 5 }, (_, i) => new Date().getFullYear() - i).map((year) => (
               <option key={year} value={year}>
@@ -170,6 +189,8 @@ const Balance: React.FC = ({
             title={categoryData.category}
             totalAmount={categoryData.totalAmount}
             items={categoryData.items}
+            type="expenses"
+            onDelete={handleDelete} // Välitetään delete-logiikka DataCardille
           />
         ))}
       </div>
@@ -177,7 +198,13 @@ const Balance: React.FC = ({
       {/* Section for listing incomes. */}
       <h2 className={styles.balanceTitle}>Income</h2>
       <div className={styles.dataCardsContainer}>
-        <DataCard title={"Income"} totalAmount={totalAmount} items={incomeData} />
+        <DataCard
+          title={"Income"}
+          totalAmount={totalAmount}
+          items={incomeData}
+          type="incomes"
+          onDelete={handleDelete} // Välitetään delete-logiikka DataCardille
+        />
       </div>
 
       {/* Section for adding incomes and expenses. */}
@@ -189,6 +216,15 @@ const Balance: React.FC = ({
         navigateToSecondRoute={"/balance"}
         buttonTextFirst={"Back to Home"}
         buttonTextSecond={"Log Out"} />
+
+      {/* PopUp */}
+      {popupVisible && deleteId !== null &&
+        <DeletePopUp
+          itemId={deleteId}
+          type={deleteType}
+          onClose={closePopUp}
+        />
+      }
 
     </div>
   );

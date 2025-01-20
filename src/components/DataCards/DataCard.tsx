@@ -8,6 +8,9 @@ interface DataCardProps {
     totalAmount: number;
     // DataCardListing komponentille vietävä data
     items: { id: number; description: string; amount: number }[];
+    type: "expenses" | "incomes";
+    onDelete: (id: number, type: "incomes" | "expenses") => void; // Välitetään onDelete-proppi
+
 }
 
 
@@ -15,7 +18,9 @@ interface DataCardProps {
 const DataCard: React.FC<DataCardProps> = ({
     title,
     totalAmount,
-    items
+    items,
+    type,
+    onDelete
 }) => {
 
     return (
@@ -24,7 +29,10 @@ const DataCard: React.FC<DataCardProps> = ({
                 <h3>{title}</h3>
                 <p>{totalAmount}€</p>
             </div>
-            <DataCardItemList items={items} />
+            <DataCardItemList 
+                items={items}
+                onDelete={onDelete} 
+                type={type}                 />
 
         </div>
     );

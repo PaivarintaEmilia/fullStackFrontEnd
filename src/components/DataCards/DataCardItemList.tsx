@@ -2,22 +2,31 @@ import React, { useState } from 'react';
 import styles from "./DataCard.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from '@mui/icons-material/Edit';
-
+import { useNavigate } from "react-router-dom";
+import DeletePopUp from '../PopUp/PopUp';
+import supabase from '../../../supabase';
 
 
 interface Item {
     id: number;
     description: string;
     amount: number;
-  }
-  
-  interface DataCardItemListProps {
-    items: Item[];
-  }
-const DataCardItemList: React.FC<DataCardItemListProps> = ({ items }) => {
+}
 
+interface DataCardItemListProps {
+    items: Item[];
+    type: "incomes" | "expenses";
+    onDelete: (id: number, type: "incomes" | "expenses") => void; // Välitetään sekä ID että tyyppi
+}
+
+const DataCardItemList: React.FC<DataCardItemListProps> = ({ items, onDelete, type }) => {
+
+    const navigate = useNavigate();
 
     const [hoveredItem, setHoveredItem] = useState<number | null>(null);
+
+    const [popupVisible, setPopupVisible] = useState<boolean>(false)
+    const [deleteId, setDeleteId] = useState<number | null>(null);
 
     const handleMouseEnter = (id: number) => {
         setHoveredItem(id);
@@ -29,16 +38,45 @@ const DataCardItemList: React.FC<DataCardItemListProps> = ({ items }) => {
 
     const handleDelete = (id: number) => {
         console.log(`Delete item with id: ${id}`);
+        // Set PopUp visible
+        setPopupVisible(!popupVisible);
+        setDeleteId(id);
+
+        const selectedItem = items.find(item => item.id === id);
+
+        if (selectedItem) {
+            // Set PopUp visible
+            setPopupVisible(!popupVisible);
+            console.log(`Navigation ok`);
+        };
         // Lisää logiikka itemin poistamiseen
+        // Logiikka pop uppiin
+        //const response = await supabase
+        //  .from('countries')
+        //.delete()
+        //.eq('id', 1)
+
     };
+
+    const closePopUp = () => {
+        setPopupVisible(false);
+        setDeleteId(null);
+        // Tämä tulee välittää komponentille. 
+    }
 
     const handleEdit = (id: number) => {
         console.log(`Edit item with id: ${id}`);
-        // Lisää logiikka itemin muokkaamiseen
+
+        const selectedItem = items.find(item => item.id === id);
+
+        if (selectedItem) {
+            navigate(`/editIncome`, { state: { ...selectedItem } });
+            console.log(`Navigation ok`);
+        }
     };
 
     return (
-        <div>
+        <>
             {items.map((item) => (
                 <div
                     key={item.id}
@@ -53,15 +91,18 @@ const DataCardItemList: React.FC<DataCardItemListProps> = ({ items }) => {
                         {hoveredItem === item.id && (
                             <div className={styles.itemOptionsContainer}>
                                 <button onClick={() => handleEdit(item.id)}><EditIcon /></button>
-                                <button onClick={() => handleDelete(item.id)}><DeleteIcon /></button>
+                                <button onClick={() => onDelete(item.id, type)}><DeleteIcon /></button>
                             </div>
                         )}
                     </div>
                     <p>{item.amount}€</p>
 
+
+
+
                 </div>
             ))}
-        </div>
+        </>
     );
 };
 
