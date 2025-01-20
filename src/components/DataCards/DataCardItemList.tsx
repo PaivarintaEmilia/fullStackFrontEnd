@@ -3,18 +3,19 @@ import styles from "./DataCard.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from '@mui/icons-material/Edit';
 
+
+
 interface Item {
     id: number;
-    name: string;
+    description: string;
     amount: number;
-}
+  }
+  
+  interface DataCardItemListProps {
+    items: Item[];
+  }
+const DataCardItemList: React.FC<DataCardItemListProps> = ({ items }) => {
 
-const DataCardItemList: React.FC = () => {
-    const [items] = useState<Item[]>([
-        { id: 1, name: 'Item 1', amount: 200 },
-        { id: 2, name: 'Item 2', amount: 100 },
-        { id: 3, name: 'Item 3', amount: 15 },
-    ]);
 
     const [hoveredItem, setHoveredItem] = useState<number | null>(null);
 
@@ -48,7 +49,7 @@ const DataCardItemList: React.FC = () => {
                     <div className={styles.itemTitleOptionContainer}>
 
 
-                        <h4>{item.name}</h4>
+                        <h4>{item.description}</h4>
                         {hoveredItem === item.id && (
                             <div className={styles.itemOptionsContainer}>
                                 <button onClick={() => handleEdit(item.id)}><EditIcon /></button>
