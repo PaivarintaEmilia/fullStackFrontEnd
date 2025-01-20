@@ -81,7 +81,6 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
                         <Select
                             options={options}
                             onChange={selectChange}
-                            placeholder={"Choose Expense Categoryxx"}
                             id="global-select"
                             className={""}
                         />
