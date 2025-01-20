@@ -52,7 +52,13 @@ const DeletePopUp: React.FC<DeletePopUpProps> = ({ itemId, onClose, type }) => {
 
     const handleDelete = async (e: React.FormEvent) => {
 
+
         e.preventDefault();
+
+        if (!userToken) {
+            console.error("No user token found. Function can not be implemented.")
+            return;
+        }
 
         const tableName = type === "incomes" ? "incomes" : "expenses";
 

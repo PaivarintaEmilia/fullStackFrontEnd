@@ -91,7 +91,7 @@ const AddForms: React.FC = () => {
 
 
     const submitFormExpense = async (e: React.FormEvent) => {
-        //e.preventDefault(); // Estetään oletustoiminto
+        e.preventDefault(); // Estetään oletustoiminto
 
         if (!userToken) {
             console.error("No user token found. Function can not be implemented.")
@@ -130,7 +130,7 @@ const AddForms: React.FC = () => {
     const submitFormIncome = async (e: React.FormEvent) => {
 
         // Ei sittenkään estetä sivun päivittämistä, sillä yläosan tiedot tulee päivittää
-        //e.preventDefault();
+        e.preventDefault();
 
         if (!userToken) {
             console.error("No user token found. Function can not be implemented.")

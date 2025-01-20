@@ -3,8 +3,6 @@ import styles from "./DataCard.module.css";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from "react-router-dom";
-import DeletePopUp from '../PopUp/PopUp';
-import supabase from '../../../supabase';
 
 
 interface Item {
@@ -25,8 +23,8 @@ const DataCardItemList: React.FC<DataCardItemListProps> = ({ items, onDelete, ty
 
     const [hoveredItem, setHoveredItem] = useState<number | null>(null);
 
-    const [popupVisible, setPopupVisible] = useState<boolean>(false)
-    const [deleteId, setDeleteId] = useState<number | null>(null);
+    //const [popupVisible, setPopupVisible] = useState<boolean>(false)
+   // const [deleteId, setDeleteId] = useState<number | null>(null);
 
     const handleMouseEnter = (id: number) => {
         setHoveredItem(id);
@@ -36,19 +34,19 @@ const DataCardItemList: React.FC<DataCardItemListProps> = ({ items, onDelete, ty
         setHoveredItem(null);
     };
 
-    const handleDelete = (id: number) => {
-        console.log(`Delete item with id: ${id}`);
+    //const handleDelete = (id: number) => {
+        //console.log(`Delete item with id: ${id}`);
         // Set PopUp visible
-        setPopupVisible(!popupVisible);
-        setDeleteId(id);
+      //  setPopupVisible(!popupVisible);
+      //  setDeleteId(id);
 
-        const selectedItem = items.find(item => item.id === id);
+       // const selectedItem = items.find(item => item.id === id);
 
-        if (selectedItem) {
+     //   if (selectedItem) {
             // Set PopUp visible
-            setPopupVisible(!popupVisible);
-            console.log(`Navigation ok`);
-        };
+         //   setPopupVisible(!popupVisible);
+       //     console.log(`Navigation ok`);
+     //   };
         // Lisää logiikka itemin poistamiseen
         // Logiikka pop uppiin
         //const response = await supabase
@@ -56,13 +54,8 @@ const DataCardItemList: React.FC<DataCardItemListProps> = ({ items, onDelete, ty
         //.delete()
         //.eq('id', 1)
 
-    };
+   // };
 
-    const closePopUp = () => {
-        setPopupVisible(false);
-        setDeleteId(null);
-        // Tämä tulee välittää komponentille. 
-    }
 
     const handleEdit = (id: number) => {
         console.log(`Edit item with id: ${id}`);
