@@ -17,3 +17,32 @@
     padding: 80px 100px;
 
 }
+
+/* Tablet */
+@media only screen and (max-width: 768px) {
+
+}
+
+
+/* Mobile */
+@media only screen and (max-width: 480px) {
+    .mainContainer {
+        grid-template-columns: 1fr;
+    }
+    
+    .heroContainer {
+        display: flex;
+        align-items: center;
+    
+    }
+    
+    .authenticationContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0px 25px;
+        padding-bottom: 100px;
+    
+    }
+
+}

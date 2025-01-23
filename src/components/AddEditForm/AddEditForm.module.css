@@ -1,7 +1,9 @@
 form {
     display: flex;
-    flex-direction: column; /* Aseta elementit pystysuoraan */
-    gap: 1rem; /* Lisää tilaa elementtien väliin */
+    flex-direction: column;
+    /* Aseta elementit pystysuoraan */
+    gap: 1rem;
+    /* Lisää tilaa elementtien väliin */
     align-items: center;
     width: 100%;
 }
@@ -29,4 +31,23 @@ h3 {
     background-repeat: no-repeat;
     padding: 70px 0px;
     border-radius: 0 0 25px 25px;
+}
+
+
+/* Tablet */
+@media only screen and (max-width: 768px) {}
+
+
+/* Mobile */
+@media only screen and (max-width: 480px) {
+
+    h3 {
+        font-size: 1.8rem;
+    }
+
+    .formContainer {
+        width: 90%;
+        padding: 45px 20px;
+    }
+
 }
