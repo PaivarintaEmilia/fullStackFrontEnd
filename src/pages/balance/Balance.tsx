@@ -149,7 +149,7 @@ const Balance: React.FC = ({
 
       {/* Filters for Month and Year */}
       <div className={styles.filterContainer}>
-        <label>
+        <label className={styles.customLabel}>
           Month:
           <select
             value={selectedMonth}
@@ -163,8 +163,8 @@ const Balance: React.FC = ({
             ))}
           </select>
         </label>
-
-        <label>
+        
+        <label className={styles.customLabel}>
           Year:
           <select
             value={selectedYear}

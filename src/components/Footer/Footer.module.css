@@ -32,3 +32,44 @@
     font-weight: 200;
     font-size: 0.9rem;
 }
+
+
+/* Tablet */
+@media only screen and (max-width: 768px) {
+    .FooterContainer {
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        height: 35vh;
+        gap: 50px;
+        padding: 0px 35px;
+    }
+
+
+    .navigationContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 40px;
+    }
+}
+
+
+/* Mobile */
+@media only screen and (max-width: 480px) {
+    .FooterContainer {
+        flex-direction: column;
+        justify-content: center;
+        align-items: start;
+        height: 65vh;
+        gap: 50px;
+        padding: 0px 35px;
+    }
+
+
+    .navigationContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+    }
+
+}

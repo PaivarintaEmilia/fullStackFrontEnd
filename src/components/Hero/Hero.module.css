@@ -15,12 +15,61 @@
     justify-content: center;
     align-items: center;
 }
+
 .textContainer h1 {
     font-size: 3rem;
     font-weight: 500;
 }
+
 .textContainer h2 {
     font-size: 1.2rem;
     font-weight: 300;
     margin-bottom: 15px;
 }
+
+
+/* Tablet */
+@media only screen and (max-width: 768px) {
+    .HeroContainer {
+        height: 70vh;   
+    }
+
+    .textContainer {
+        text-align: center;
+        width: 60%;
+    }
+  }
+
+
+/* Mobile */
+@media only screen and (max-width: 480px) {
+    .HeroContainer {
+        width: 100%;
+        height: 30vh; /* Poista tämä, koska todennäköisesti määritetään erikseen joka näytöllä sopiva korkeus */   
+        background-image: url("/public/photos/heroCover.png");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .textContainer {
+        text-align: center;
+        width: 80%;
+        gap: 15px;
+    }
+
+    .textContainer h1 {
+        font-size: 2.3rem;
+        font-weight: 500;
+        line-height: 2.8rem;
+    }
+
+    .textContainer h2 {
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+  }

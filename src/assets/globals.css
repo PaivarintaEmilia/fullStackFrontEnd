@@ -74,6 +74,7 @@ body {
 }
 
 #global-select {
+    box-sizing: border-box;
     width: 100%;
     padding: 20px;
     border-radius: 0.7rem;
@@ -85,6 +86,11 @@ body {
     color: rgb(138, 138, 138);
 }
 
+#global-select option {
+    width: 100%; /* Varmistaa pudotusvalikon skaalautumisen */
+    text-align: left;
+}
+
 #global-select:focus {
     border-color: #6145b49f; /* Reunusväri focus-tilassa */
 }
@@ -93,3 +99,17 @@ body {
     color: white; /* Placeholderin väri */
 }
 
+
+/* Select mobile optimization */ 
+/* Tablet */
+@media only screen and (max-width: 768px) {}
+
+
+/* Mobile */
+@media only screen and (max-width: 480px) {
+
+    #global-select {
+        width: 100%;
+    }
+
+}
