@@ -178,9 +178,9 @@ const AddForms: React.FC = () => {
                     selectChange={handleSelectChange} // Selecting change
                     onButtonClick={function (): void {
                         throw new Error("Function not implemented.");
-                    }}
-                    onSubmit={submitFormExpense}
-                />
+                    } }
+                    onSubmit={submitFormExpense} 
+                    selectValue={0}                />
                 <AddEditForm
                     formTitle={"Income"}
                     noteName={"Description"}
@@ -195,6 +195,7 @@ const AddForms: React.FC = () => {
                         throw new Error("Function not implemented."); // Tarvitaanko tätä??
                     }}
                     onSubmit={submitFormIncome}
+                    selectValue={0}
                 />
 
 
