@@ -6,13 +6,14 @@ interface SelectProps {
     onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     id: string;
     className: string,
+    value: number,
 }
 
 
-const Select: React.FC<SelectProps> = ({ options, onChange, id, className }) => {
+const Select: React.FC<SelectProps> = ({ options, onChange, id, className, value }) => {
 
     return (
-        <select onChange={onChange} defaultValue="" id={id} className={className}>
+        <select onChange={onChange} value={value} id={id} className={className}>
             {/*TODO: Do we need a placeholder? <option value="" disabled>{placeholder}</option>*/}
             {options.map(option => (
                 <option key={option.category_id} value={option.category_id}>

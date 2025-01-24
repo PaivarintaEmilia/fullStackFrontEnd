@@ -23,9 +23,6 @@ const DataCardItemList: React.FC<DataCardItemListProps> = ({ items, onDelete, ty
 
     const [hoveredItem, setHoveredItem] = useState<number | null>(null);
 
-    //const [popupVisible, setPopupVisible] = useState<boolean>(false)
-   // const [deleteId, setDeleteId] = useState<number | null>(null);
-
     const handleMouseEnter = (id: number) => {
         setHoveredItem(id);
     };
@@ -34,37 +31,21 @@ const DataCardItemList: React.FC<DataCardItemListProps> = ({ items, onDelete, ty
         setHoveredItem(null);
     };
 
-    //const handleDelete = (id: number) => {
-        //console.log(`Delete item with id: ${id}`);
-        // Set PopUp visible
-      //  setPopupVisible(!popupVisible);
-      //  setDeleteId(id);
 
-       // const selectedItem = items.find(item => item.id === id);
-
-     //   if (selectedItem) {
-            // Set PopUp visible
-         //   setPopupVisible(!popupVisible);
-       //     console.log(`Navigation ok`);
-     //   };
-        // Lisää logiikka itemin poistamiseen
-        // Logiikka pop uppiin
-        //const response = await supabase
-        //  .from('countries')
-        //.delete()
-        //.eq('id', 1)
-
-   // };
-
-
-    const handleEdit = (id: number) => {
+    const handleEdit = (id: number, type: "incomes" | "expenses") => {
         console.log(`Edit item with id: ${id}`);
 
         const selectedItem = items.find(item => item.id === id);
 
         if (selectedItem) {
-            navigate(`/edit-income`, { state: { ...selectedItem } });
-            console.log(`Navigation ok`);
+            if (type === "incomes") {
+                navigate(`/edit-income`, { state: { ...selectedItem } });
+                console.log(`Navigation ok to edit income`);
+            } else if (type === "expenses") {
+                navigate(`/edit-expense`, { state: { ...selectedItem } });
+                console.log(`Navigation ok to edit expense`, selectedItem);
+            }
+
         }
     };
 
@@ -83,7 +64,7 @@ const DataCardItemList: React.FC<DataCardItemListProps> = ({ items, onDelete, ty
                         <h4>{item.description}</h4>
                         {hoveredItem === item.id && (
                             <div className={styles.itemOptionsContainer}>
-                                <button onClick={() => handleEdit(item.id)}><EditIcon /></button>
+                                <button onClick={() => handleEdit(item.id, type)}><EditIcon /></button>
                                 <button onClick={() => onDelete(item.id, type)}><DeleteIcon /></button>
                             </div>
                         )}
