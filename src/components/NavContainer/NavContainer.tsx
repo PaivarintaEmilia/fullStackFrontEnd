@@ -45,7 +45,6 @@ const NavContainer: React.FC<NavContainerProps> = ({
                     type="button"
                     value="" // tarvitaanko navContainerissa?
                     className={styles.navContainerBtnFirst}
-                    id="" 
                     onClick={handleFirstButtonClick}
                     text={buttonTextFirst}
                 />
@@ -54,7 +53,6 @@ const NavContainer: React.FC<NavContainerProps> = ({
                     type="button"
                     value="" // tarvitaanko navContainerissa?
                     className={styles.navContainerBtnSecond}
-                    id="" 
                     onClick={handleSecondButtonClick}
                     text={buttonTextSecond}
                 />

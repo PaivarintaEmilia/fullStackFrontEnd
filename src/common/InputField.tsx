@@ -7,14 +7,13 @@ interface InputFieldProps {
     placeholder: string,
     value: string,
     className: string,
-    id: string, 
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void, 
 }
 
 
-const InputField: React.FC<InputFieldProps> = ({ name, type, placeholder, value, className, id, onChange}) => {
+const InputField: React.FC<InputFieldProps> = ({ name, type, placeholder, value, className, onChange}) => {
 
-    return <input name={name} type={type} placeholder={placeholder} value={value} className={className} id={id} onChange={onChange} />
+    return <input name={name} type={type} placeholder={placeholder} value={value} className={className} onChange={onChange} />
 }
 
 export default InputField;

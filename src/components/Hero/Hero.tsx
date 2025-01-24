@@ -22,7 +22,14 @@ const Hero: React.FC<HeroProps> = ({
                 <h1>{heroTitle}</h1>
                 <h2>{titleTag}</h2>
                 {location.pathname === '/home' &&
-                    <ButtonComponent name={"heroBtn"} type={"button"} value={""} className={""} id={"global-btn"} text={"Check Balance"} onClick={() => navigate('/balance') }></ButtonComponent>
+                    <ButtonComponent 
+                        name={"heroBtn"} 
+                        type={"button"} 
+                        value={""} 
+                        className={"global-btn"} 
+                        text={"Check Balance"} 
+                        onClick={() => navigate('/balance') }
+                    />
                 }
             </div>
         </div>

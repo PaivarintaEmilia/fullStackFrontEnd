@@ -121,7 +121,7 @@ const EditIncomeForm: React.FC = () => {
             <div className={styles.formContainer}>
                 <AddEditForm
                     formTitle={"Edit Income"}
-                    noteName={"Description"}
+                    descriptionName={"Description"}
                     noteValue={incomeNote}
                     amountName={"Amount"}
                     amountValue={incomeAmount.toString()} // Muutetaan takaisin string-muoton. Jos ei ole undefined tämä on määritetty arvo 

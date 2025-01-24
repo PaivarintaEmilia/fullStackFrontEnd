@@ -6,11 +6,11 @@ import supabase from "../../../supabase";
 
 interface AddEditFormProps {
     formTitle: string;
-    noteName: string;
+    buttonText: string;
+    descriptionName: string;
     noteValue: string;
     amountName: string;
     amountValue: string;
-    buttonText: string;
     noteChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     amountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     // Select-input functionalities
@@ -22,7 +22,7 @@ interface AddEditFormProps {
 
 const AddEditForm: React.FC<AddEditFormProps> = ({
     formTitle,
-    noteName,
+    descriptionName,
     noteValue,
     amountName,
     amountValue,
@@ -71,22 +71,22 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
                 <form onSubmit={onSubmit}>
                     <h3>{formTitle}</h3>
                     <InputField
-                        name={noteName}
+                        name={descriptionName}
                         type={"text"}
                         placeholder={"Note"}
                         value={noteValue}
                         className={"global-input"}
-                        id={"global-input"}
                         onChange={noteChange}
                     />
-                    {/* This element is only shown with using Expense forms. */}
+                    {/* This element is only shown when Expense-forms are being used. */}
                     {!(formTitle == "Income" || formTitle == "Edit Income") &&
                         <Select
-                        options={options}
-                        onChange={selectChange}
-                        id="global-select"
-                        className={""} 
-                        value={selectValue}                        />
+                            options={options}
+                            onChange={selectChange}
+                            id="global-select"
+                            className={""} 
+                            value={selectValue}                        
+                        />
                     }
                     <InputField
                         name={amountName}
@@ -94,7 +94,6 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
                         placeholder={"Amount"}
                         value={amountValue}
                         className={"global-input"}
-                        id={"global-input"}
                         onChange={amountChange}
                     />
                     <ButtonComponent
@@ -102,7 +101,6 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
                         type={"submit"}
                         value={""}
                         className={"global-btn"}
-                        id={""}
                         text={buttonText}
                         onClick={onButtonClick}
                     />

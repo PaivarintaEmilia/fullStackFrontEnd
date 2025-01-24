@@ -168,7 +168,7 @@ const AddForms: React.FC = () => {
             <div className={styles.formContainer}>
                 <AddEditForm
                     formTitle={"Expenses"}
-                    noteName={"Description"}
+                    descriptionName={"Description"}
                     noteValue={expenseNote}
                     amountName={"Amount"}
                     amountValue={expenseAmount !== undefined ? expenseAmount.toString() : ""}
@@ -183,7 +183,7 @@ const AddForms: React.FC = () => {
                     selectValue={selectCategory}                />
                 <AddEditForm
                     formTitle={"Income"}
-                    noteName={"Description"}
+                    descriptionName={"Description"}
                     noteValue={incomeNote}
                     amountName={"Amount"}
                     amountValue={incomeAmount !== undefined ? incomeAmount.toString() : ""} // Muutetaan takaisin string-muoton. Jos ei ole undefined tämä on määritetty arvo 

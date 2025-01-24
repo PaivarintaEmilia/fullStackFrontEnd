@@ -1,22 +1,9 @@
 import React from "react";
 import Img from "../../common/Img";
-// import ButtonComponent from "../../common/Button";
-// import { useNavigate, useLocation } from 'react-router-dom';
-// Styling
 import styles from "./Footer.module.css"
 
 
-
-
 const Footer: React.FC = () => {
-
-    // const navigate = useNavigate(); // react-router-dom hook navigointiin
-
-    
-/*     const navigateLogout = () => {
-        navigate('/logout'); 
-    }; */
-
 
 
     return (
