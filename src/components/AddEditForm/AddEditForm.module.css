@@ -35,7 +35,16 @@ h3 {
 
 
 /* Tablet */
-@media only screen and (max-width: 768px) {}
+@media only screen and (max-width: 768px) {
+    h3 {
+        font-size: 1.8rem;
+    }
+
+    .formContainer {
+        width: 90%;
+        padding: 45px 20px;
+    }
+}
 
 
 /* Mobile */
