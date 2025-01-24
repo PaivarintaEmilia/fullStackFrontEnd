@@ -31,12 +31,20 @@
 /* Tablet */
 @media only screen and (max-width: 768px) {
     .HeroContainer {
-        height: 70vh;   
+        height: 40vh;   
+        margin-top: 50px;
     }
 
     .textContainer {
         text-align: center;
         width: 60%;
+        gap: 15px;
+    }
+
+    .textContainer h1 {
+        font-size: 2.3rem;
+        font-weight: 500;
+        line-height: 2.8rem;
     }
   }
 

@@ -63,7 +63,19 @@
 }
 
 /* Tablet */
-@media only screen and (max-width: 768px) {}
+@media only screen and (max-width: 768px) {
+
+
+    .navContainerImg {
+        order: 2;
+    }
+
+    .btnContainer {
+        padding: 45px 25px;
+        padding-bottom: 0px;
+        order: 1;
+    }
+}
 
 
 /* Mobile */

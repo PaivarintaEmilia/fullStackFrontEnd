@@ -63,7 +63,7 @@ const DataCardItemList: React.FC<DataCardItemListProps> = ({ items, onDelete, ty
         const selectedItem = items.find(item => item.id === id);
 
         if (selectedItem) {
-            navigate(`/editIncome`, { state: { ...selectedItem } });
+            navigate(`/edit-income`, { state: { ...selectedItem } });
             console.log(`Navigation ok`);
         }
     };

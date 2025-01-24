@@ -8,6 +8,7 @@ import Footer from "./components/Footer/Footer";
 import Authentication from "./pages/Authentication/Authentication";
 import Register from "./pages/register/Register";
 import EditIncome from "./pages/editIncome/EditIncome";
+import EditExpense from "./pages/editExpense/editExpense";
 
 
 const App: React.FC = () => {
@@ -17,11 +18,12 @@ const App: React.FC = () => {
       <Router> {/* Router-komponentti määrittää reitityksen juuren */}
         <Header />
         <Routes> {/* Routes-konteineri sisältää yksittäiset reitit */}
-          <Route path="/" element={<Authentication />} /> {/* Oletusreitti Authentication-komponentille. Tällä hetkellä vielä register.*/}
-          <Route path="/register" element={<Register />} /> {/* Oletusreitti Authentication-komponentille. Tällä hetkellä vielä register.*/}
-          <Route path="/home" element={<Home />} /> {/* Oletusreitti HomePage-komponentille*/}
-          <Route path="/balance" element={<Balance />} /> {/* Reitti Balance-komponentille */}
-          <Route path="/editIncome" element={<EditIncome />} /> {/* Reitti Balance-komponentille */}
+          <Route path="/" element={<Authentication />} /> {/* Route to Login-page */}
+          <Route path="/register" element={<Register />} /> {/* Route to Register-page */}
+          <Route path="/home" element={<Home />} /> {/* Route to Home-page */}
+          <Route path="/balance" element={<Balance />} /> {/* Route to Balance-page */}
+          <Route path="/edit-income" element={<EditIncome />} /> {/* Route to edit Incomes */}
+          <Route path="/edit-expense" element={<EditExpense />} /> {/* Route to edit Expenses */}
         </Routes>
         <Footer />
       </Router>
