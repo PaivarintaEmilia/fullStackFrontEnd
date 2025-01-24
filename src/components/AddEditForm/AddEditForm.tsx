@@ -15,7 +15,7 @@ interface AddEditFormProps {
     amountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     // Select-input functionalities
     selectChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    selectValue: number;
+    selectValue: number | undefined;
     onButtonClick: () => void;
     onSubmit: (e: React.FormEvent) => Promise<void>;
 }

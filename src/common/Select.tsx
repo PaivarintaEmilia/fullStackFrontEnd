@@ -6,7 +6,7 @@ interface SelectProps {
     onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     id: string;
     className: string,
-    value: number,
+    value: number | undefined,
 }
 
 
