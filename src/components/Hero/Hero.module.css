@@ -14,6 +14,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 .textContainer h1 {
@@ -61,7 +62,7 @@
         display: flex;
         justify-content: center;
         margin-top: 50px;
-        margin-bottom: 50px;
+        margin-bottom: 0px;
     }
 
     .textContainer {
@@ -71,9 +72,9 @@
     }
 
     .textContainer h1 {
-        font-size: 2.3rem;
+        font-size: 1.8rem;
         font-weight: 500;
-        line-height: 2.8rem;
+        line-height: 2.2rem;
     }
 
     .textContainer h2 {

@@ -92,7 +92,7 @@ const Balance: React.FC = ({
 
       const { data: expenseData, error: expenseError } = await supabase
         .from("expenses")
-        .select("id, description, amount, categories(name)")
+        .select("id, description, amount, categories(name), categoryid")
         .eq("userid", data.user.id)
         .gte("createdat", `${selectedYear}-${String(selectedMonth).padStart(2, "0")}-01`)
         .lte("createdat", `${selectedYear}-${String(selectedMonth).padStart(2, "0")}-31`);
@@ -114,11 +114,12 @@ const Balance: React.FC = ({
             id: item.id,
             description: item.description,
             amount: item.amount,
-            category
+            category,
+            categoryid: item.categoryid
           });
           return acc;
         }, {});
-
+        console.log("ExpenseData in Balance: ", expenseData);
         setExpenseData(Object.values(groupedData || {}));
       }
     };

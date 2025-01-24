@@ -14,7 +14,7 @@ const AddForms: React.FC = () => {
     // Tilamuuttujat Expense-lomakkeelle tietojen lähetykseen back-endille
     const [expenseNote, setExpenseNote] = useState<string>("")
     const [expenseAmount, setExpenseAmount] = useState<number>()
-    const [selectCategory, setSelectCategory] = useState<number>()
+    const [selectCategory, setSelectCategory] = useState<number | undefined>(0)
 
     // Usestate for JWT token and users ID
     const [userToken, setUserToken] = useState<string | null>(null);
@@ -178,9 +178,9 @@ const AddForms: React.FC = () => {
                     selectChange={handleSelectChange} // Selecting change
                     onButtonClick={function (): void {
                         throw new Error("Function not implemented.");
-                    }}
-                    onSubmit={submitFormExpense}
-                />
+                    } }
+                    onSubmit={submitFormExpense} 
+                    selectValue={selectCategory}                />
                 <AddEditForm
                     formTitle={"Income"}
                     noteName={"Description"}
@@ -195,6 +195,7 @@ const AddForms: React.FC = () => {
                         throw new Error("Function not implemented."); // Tarvitaanko tätä??
                     }}
                     onSubmit={submitFormIncome}
+                    selectValue={selectCategory}
                 />
 
 

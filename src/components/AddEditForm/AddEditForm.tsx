@@ -13,7 +13,9 @@ interface AddEditFormProps {
     buttonText: string;
     noteChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     amountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    // Select-input functionalities
     selectChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    selectValue: number | undefined;
     onButtonClick: () => void;
     onSubmit: (e: React.FormEvent) => Promise<void>;
 }
@@ -28,6 +30,7 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
     noteChange,
     amountChange,
     selectChange,
+    selectValue,
     onButtonClick,
     onSubmit,
 }) => {
@@ -79,11 +82,11 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
                     {/* This element is only shown with using Expense forms. */}
                     {!(formTitle == "Income" || formTitle == "Edit Income") &&
                         <Select
-                            options={options}
-                            onChange={selectChange}
-                            id="global-select"
-                            className={""}
-                        />
+                        options={options}
+                        onChange={selectChange}
+                        id="global-select"
+                        className={""} 
+                        value={selectValue}                        />
                     }
                     <InputField
                         name={amountName}
