@@ -101,8 +101,8 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
                         name={""}
                         type={"submit"}
                         value={""}
-                        className={""}
-                        id={"global-btn"}
+                        className={"global-btn"}
+                        id={""}
                         text={buttonText}
                         onClick={onButtonClick}
                     />

@@ -15,7 +15,7 @@ const EditIncomeForm: React.FC = () => {
     console.log("Income description: ", description);
     console.log("Income amount: ", amount);
 
-    // Tilamuuttujat Income-lomakkeelle tietojen lähetykseen back-endille
+    // UseStates for Income-form data
     const [incomeNote, setIncomeNote] = useState<string>(description || "");
     const [incomeAmount, setIncomeAmount] = useState<number>(amount || 0);
 
@@ -92,7 +92,6 @@ const EditIncomeForm: React.FC = () => {
             return;
         }
 
-
         try {
             const { error } = await supabase
                 .from("incomes")
@@ -104,8 +103,6 @@ const EditIncomeForm: React.FC = () => {
                 )
                 .eq("id", id)
                 .eq("userid", userId);
-
-
 
             if (error) {
                 console.error("Supabase error:", error);
@@ -131,12 +128,12 @@ const EditIncomeForm: React.FC = () => {
                     buttonText={"Save Changes"}
                     noteChange={handleNoteChange}
                     amountChange={handleAmountChange}
-                    selectChange={() => { }} // Selectin change. Not needed in Income
+                    selectChange={() => { } } // Selectin change. Not needed in Income
                     onButtonClick={function (): void {
                         throw new Error("Function not implemented."); // Tarvitaanko tätä?? Noo?
-                    }}
-                    onSubmit={submitFormIncome}
-                />
+                    } }
+                    onSubmit={submitFormIncome} 
+                    selectValue={undefined}                />
             </div>
         </div>
     );
