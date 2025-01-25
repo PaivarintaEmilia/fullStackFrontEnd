@@ -5,23 +5,23 @@ import style from "./AuthenticationForm.module.css";
 
 interface AuthenticateFormProps {
     title: string,
-    onSubmit: (event: React.FormEvent) => Promise<void>, // Tämä tyypitys, koska onSubmitissa on tämänlaisen argumentin vastaan
-    onChangeEmail: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    onChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void,
     valueEmail: string,
     valuePassword: string,
     text: string
     onGoogleFunctionality: () => void;
+    onSubmit: (e: React.FormEvent) => Promise<void>, // Tämä tyypitys, koska onSubmitissa on tämänlaisen argumentin vastaan
+    onChangeEmail: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    onChangePassword: (e: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
 const AuthenticationForm: React.FC<AuthenticateFormProps> = ({
     title,
-    onSubmit,
-    onChangeEmail,
-    onChangePassword,
     valueEmail,
     valuePassword,
     text,
+    onSubmit,
+    onChangeEmail,
+    onChangePassword,
     onGoogleFunctionality
 }) => {
 
@@ -37,7 +37,6 @@ const AuthenticationForm: React.FC<AuthenticateFormProps> = ({
                     placeholder='Enter email'
                     value={valueEmail}
                     className='global-input'
-                    id=''
                     onChange={onChangeEmail}
                 />
                 {/* Password Input */}
@@ -47,7 +46,6 @@ const AuthenticationForm: React.FC<AuthenticateFormProps> = ({
                     placeholder='Create password'
                     value={valuePassword}
                     className='global-input'
-                    id='' 
                     onChange={onChangePassword}
                 />
                 {/* Submit button */}
@@ -55,8 +53,7 @@ const AuthenticationForm: React.FC<AuthenticateFormProps> = ({
                     name=''
                     type='submit'
                     value=''
-                    className=''
-                    id='global-btn'
+                    className='global-btn'
                     text={text}
                     onClick={() => {}} />
                 {/* Google Authentication button */}
@@ -65,7 +62,6 @@ const AuthenticationForm: React.FC<AuthenticateFormProps> = ({
                     type='button'
                     value=''
                     className={style.googleBtn}
-                    id=''
                     text='Google Auth.'
                     onClick={onGoogleFunctionality} />
             </form>

@@ -73,9 +73,13 @@ const Authentication: React.FC = () => {
           valueEmail={email}
           onGoogleFunctionality={handleGoogleLogin}
         />
-        {/* TODO: check the styling of the error message in UI */}
+
+      </div>
+      {/* Login error message */}
+      <div className={style.errorContainer}>
         {error && <p className={style.error}>{error}</p>}
       </div>
+
     </div>
   );
 }

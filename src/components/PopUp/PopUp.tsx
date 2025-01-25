@@ -50,8 +50,9 @@ const DeletePopUp: React.FC<DeletePopUpProps> = ({ itemId, onClose, type }) => {
         fetchAuthToken();
     }, []);
 
-    const handleDelete = async (e: React.FormEvent) => {
 
+    /** DELETE ITEM */
+    const handleDelete = async (e: React.FormEvent) => {
 
         e.preventDefault();
 
@@ -99,7 +100,6 @@ const DeletePopUp: React.FC<DeletePopUpProps> = ({ itemId, onClose, type }) => {
                         type="button"
                         value=""
                         className="global-btn"
-                        id="back"
                         text="Back"
                         onClick={onClose}
                     />
@@ -108,7 +108,6 @@ const DeletePopUp: React.FC<DeletePopUpProps> = ({ itemId, onClose, type }) => {
                         type="submit"
                         value=""
                         className="global-btn-black"
-                        id="delete"
                         text="Delete item"
                         onClick={() => { }}
                     />

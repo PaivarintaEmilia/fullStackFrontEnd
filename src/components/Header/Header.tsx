@@ -45,19 +45,17 @@ const Header: React.FC = () => {
                         name="register"
                         type="button"
                         value="" // tarvitaanko navContainerissa?
-                        className={styles.registerBtn}
-                        id="global-btn"
+                        className={"global-btn"}
                         onClick={navigateRegister}
                         text="Register"
                     />
                 }
-                {location.pathname == '/register' && // Näytetään vaan /register pagessa
+                {location.pathname == '/register' && 
                     <ButtonComponent
                         name="Login"
                         type="button"
                         value="" // tarvitaanko navContainerissa?
-                        className={styles.loginBtn}
-                        id=""
+                        className={"global-btn-black"}
                         onClick={navigateLogin}
                         text="Login"
                     />
@@ -67,8 +65,7 @@ const Header: React.FC = () => {
                         name="Logout"
                         type="button"
                         value="" // tarvitaanko navContainerissa?
-                        className={styles.logOutBtn}
-                        id="logOutHidden"
+                        className={"global-btn-black"}
                         onClick={signOut}
                         text="Logout"
                     />

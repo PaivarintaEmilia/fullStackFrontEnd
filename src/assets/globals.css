@@ -1,3 +1,4 @@
+/* GLOBAL STYLES */
 :root {
     font-family: "Poppins", sans-serif;
     font-weight: 400;
@@ -20,19 +21,7 @@ body {
 
 /* COMMON COMPONENTS */
 
-/* Global main styling of a button. Use modules classNames to different styling options. */
-#global-btn {
-    width: 9rem;
-    height: 2.5rem;
-    flex-shrink: 0;
-    border-radius: 3.1875rem;
-    background: linear-gradient(90deg, #6145B4 51%, rgba(97, 69, 180, 0.37) 100%);
-    backdrop-filter: blur(12.399999618530273px);
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
+/* Global button styling */
 .global-btn {
     width: 9rem;
     height: 2.5rem;
@@ -45,7 +34,7 @@ body {
     cursor: pointer;
 }
 
-/* Global btn black */
+/* Global secundary button styling */
 .global-btn-black {
     width: 9rem;
     height: 2.5rem;
@@ -57,59 +46,46 @@ body {
     font-size: 1rem;
 }
 
+/* Global Input-field styling */
 .global-input {
     width: 100%;
     padding: 20px;
     border-radius: 0.7rem;
     background: #000;
     color: #fff;
-    /* reunus */
-    border: 2px solid #383838; /* Oletusreunusväri */
-    transition: border-color 0.3s ease-in-out; /* Siirtymä reunusvärille */
-    outline: none; /* Poistaa oletustyylin focus-tilassa */
+    /* Border */
+    border: 2px solid #383838; 
+    transition: border-color 0.3s ease-in-out;
+    outline: none; 
 }
 
 #global-input:focus {
     border-color: #6145b49f; /* Reunusväri focus-tilassa */
 }
 
+/* Global Select-element styling */
 #global-select {
     box-sizing: border-box;
     width: 100%;
     padding: 20px;
     border-radius: 0.7rem;
     background: #000;
-    /* reunus */
-    border: 2px solid #383838; /* Oletusreunusväri */
-    transition: border-color 0.3s ease-in-out; /* Siirtymä reunusvärille */
-    outline: none; /* Poistaa oletustyylin focus-tilassa */
+    /* Border */
+    border: 2px solid #383838; 
+    transition: border-color 0.3s ease-in-out; 
+    outline: none; 
     color: rgb(138, 138, 138);
 }
 
 #global-select option {
-    width: 100%; /* Varmistaa pudotusvalikon skaalautumisen */
+    width: 100%; 
     text-align: left;
 }
 
 #global-select:focus {
-    border-color: #6145b49f; /* Reunusväri focus-tilassa */
+    border-color: #6145b49f; 
 }
 
 #global-select::placeholder {
-    color: white; /* Placeholderin väri */
-}
-
-
-/* Select mobile optimization */ 
-/* Tablet */
-@media only screen and (max-width: 768px) {}
-
-
-/* Mobile */
-@media only screen and (max-width: 480px) {
-
-    #global-select {
-        width: 100%;
-    }
-
+    color: white; 
 }

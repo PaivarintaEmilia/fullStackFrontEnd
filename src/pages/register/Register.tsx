@@ -35,7 +35,7 @@ const Register: React.FC = () => {
   // Google Authentication
   const handleGoogleRegistration = async () => {
     console.log('GoogleAuth-painiketta painettu.');
-    
+
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google'
     });
@@ -44,8 +44,6 @@ const Register: React.FC = () => {
       setError(error.message);
     }
   };
-
- 
 
   return (
     <div className={style.mainContainer}>
@@ -61,9 +59,11 @@ const Register: React.FC = () => {
           text='Register'
           valuePassword={password}
           valueEmail={email}
-          onGoogleFunctionality={handleGoogleRegistration} 
+          onGoogleFunctionality={handleGoogleRegistration}
         />
-        {/* TODO: check the styling of the error message in UI */}
+      </div>
+      {/* Register error message */}
+      <div className={style.errorContainer}>
         {error && <p className={style.error}>{error}</p>}
       </div>
     </div>

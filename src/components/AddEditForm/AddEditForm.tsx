@@ -6,11 +6,11 @@ import supabase from "../../../supabase";
 
 interface AddEditFormProps {
     formTitle: string;
-    noteName: string;
-    noteValue: string;
+    buttonText: string;
+    descriptionName: string;
+    descriptionValue: string;
     amountName: string;
     amountValue: string;
-    buttonText: string;
     noteChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     amountChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     // Select-input functionalities
@@ -22,8 +22,8 @@ interface AddEditFormProps {
 
 const AddEditForm: React.FC<AddEditFormProps> = ({
     formTitle,
-    noteName,
-    noteValue,
+    descriptionName,
+    descriptionValue,
     amountName,
     amountValue,
     buttonText,
@@ -35,12 +35,9 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
     onSubmit,
 }) => {
 
-    /* Select komponentin toiminnot, koska nämä pysyvät samana lomakkeelta toiselle*/
-
-    // Options tilan alustaminen
     const [options, setOptions] = useState<{ category_id: number; category_name: string }[]>([]); 
 
-
+    // Get Categories data for Expense-form
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -67,26 +64,26 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
 
     return (
         <div>
-            <div >
+            <div>
                 <form onSubmit={onSubmit}>
                     <h3>{formTitle}</h3>
                     <InputField
-                        name={noteName}
+                        name={descriptionName}
                         type={"text"}
                         placeholder={"Note"}
-                        value={noteValue}
+                        value={descriptionValue}
                         className={"global-input"}
-                        id={"global-input"}
                         onChange={noteChange}
                     />
-                    {/* This element is only shown with using Expense forms. */}
+                    {/* This element is only shown when Expense-forms are being used. */}
                     {!(formTitle == "Income" || formTitle == "Edit Income") &&
                         <Select
-                        options={options}
-                        onChange={selectChange}
-                        id="global-select"
-                        className={""} 
-                        value={selectValue}                        />
+                            options={options}
+                            onChange={selectChange}
+                            id="global-select"
+                            className={""} 
+                            value={selectValue}                        
+                        />
                     }
                     <InputField
                         name={amountName}
@@ -94,15 +91,13 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
                         placeholder={"Amount"}
                         value={amountValue}
                         className={"global-input"}
-                        id={"global-input"}
                         onChange={amountChange}
                     />
                     <ButtonComponent
                         name={""}
                         type={"submit"}
                         value={""}
-                        className={""}
-                        id={"global-btn"}
+                        className={"global-btn"}
                         text={buttonText}
                         onClick={onButtonClick}
                     />

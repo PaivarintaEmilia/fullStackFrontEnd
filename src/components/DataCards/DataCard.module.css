@@ -25,7 +25,6 @@
 
 
 /* DataCardItemList-component styling */
-
 .listItemContainer {
     padding: 10px; 
     border-bottom: 1px solid #ffffff63; 
@@ -35,9 +34,7 @@
     justify-content: space-between;
 }
 
-
 .itemTitleOptionContainer {
-    /* Tähän tulee h4 ja hoverItem. Keksi parempi nimi */
     display: flex;
     flex-direction: row;
     gap: 15px;

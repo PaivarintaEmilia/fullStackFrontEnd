@@ -1,22 +1,9 @@
 import React from "react";
 import Img from "../../common/Img";
-// import ButtonComponent from "../../common/Button";
-// import { useNavigate, useLocation } from 'react-router-dom';
-// Styling
 import styles from "./Footer.module.css"
 
 
-
-
 const Footer: React.FC = () => {
-
-    // const navigate = useNavigate(); // react-router-dom hook navigointiin
-
-    
-/*     const navigateLogout = () => {
-        navigate('/logout'); 
-    }; */
-
 
 
     return (
@@ -30,18 +17,17 @@ const Footer: React.FC = () => {
             <div className={styles.navigationContainer}>
                 <div className={styles.linkContainer}>
                     <h4>Contact</h4>
-                    <a href="#">esim@gmail.com</a>
+                    <a href="mailto:mariaemilia.paivarinta@gmail.com">mariaemilia.paivarinta@gmail.com</a>
                 </div>                
                 <div className={styles.linkContainer}>
                     <h4>Socials</h4>
-                    <a href="#">gitHub</a>
-                    <a href="#">LinkedIn</a>
+                    <a href="https://github.com/PaivarintaEmilia">gitHub</a>
+                    <a href="https://www.linkedin.com/in/emilia-p%C3%A4iv%C3%A4rinta-8413a8152/">LinkedIn</a>
                 </div>                
                 <div className={styles.linkContainer}>
                     <h4>Linklist</h4>
                     <a href="/home">Home</a>
                     <a href="/balance">Balance</a>
-                    <a href="/logout">LogOut</a>
                     <a href="https://fullstackdoc.onrender.com/">Documentation</a>
                 </div>
             </div>

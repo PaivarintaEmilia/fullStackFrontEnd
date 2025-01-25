@@ -7,7 +7,7 @@ interface DataCardProps {
     title: string;
     totalAmount: number;
     // DataCardListing komponentille vietävä data
-    items: { id: number; description: string; amount: number }[];
+    items: { id: number; description: string; amount: number; }[];
     type: "expenses" | "incomes";
     onDelete: (id: number, type: "incomes" | "expenses") => void; // Välitetään onDelete-proppi
 
@@ -32,7 +32,8 @@ const DataCard: React.FC<DataCardProps> = ({
             <DataCardItemList 
                 items={items}
                 onDelete={onDelete} 
-                type={type}                 />
+                type={type}                 
+            />
 
         </div>
     );

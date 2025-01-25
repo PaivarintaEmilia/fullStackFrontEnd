@@ -15,8 +15,8 @@ const EditIncomeForm: React.FC = () => {
     console.log("Income description: ", description);
     console.log("Income amount: ", amount);
 
-    // Tilamuuttujat Income-lomakkeelle tietojen lähetykseen back-endille
-    const [incomeNote, setIncomeNote] = useState<string>(description || "");
+    // UseStates for Income-form data
+    const [incomeDesc, setIncomeDesc] = useState<string>(description || "");
     const [incomeAmount, setIncomeAmount] = useState<number>(amount || 0);
 
     // Usestate for JWT token and users ID
@@ -59,27 +59,23 @@ const EditIncomeForm: React.FC = () => {
     }, []);
 
     /* HANDLE FUNCTIONS */
-    // Funktio incomeNote-muuttujan päivittämiseen
-    const handleNoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setIncomeNote(e.target.value);
+    // Handle income Description-field changes
+    const handleDescChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setIncomeDesc(e.target.value);
     };
 
-    // Funktio incomeAmount-muuttujan päivittämiseen
+    // Handle income Amount-field changes
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // Muutetaan syötä numeeriseen muotoon
         const value = parseFloat(e.target.value);
-        // Asetetaan undefined, jos syöte ei olekaan numeerisessa muodossa
         setIncomeAmount(value);
     };
 
 
-
-    // Funktio datan lähettämiseen back-endille Income-formin kautta
+    /** EDIT INCOME */
     const submitFormIncome = async (e: React.FormEvent) => {
 
         console.log("Submit formin sisällä");
 
-        // Ei sittenkään estetä sivun päivittämistä, sillä yläosan tiedot tulee päivittää
         e.preventDefault();
 
         if (!userToken) {
@@ -87,11 +83,10 @@ const EditIncomeForm: React.FC = () => {
             return;
         }
 
-        if (!id || !incomeNote || !incomeAmount) {
-            console.error("Missing required fields: ", { id, incomeNote, incomeAmount });
+        if (!id || !incomeDesc || !incomeAmount) {
+            console.error("Missing required fields: ", { id, incomeDesc, incomeAmount });
             return;
         }
-
 
         try {
             const { error } = await supabase
@@ -99,13 +94,11 @@ const EditIncomeForm: React.FC = () => {
                 .update(
                     {
                         amount: incomeAmount,
-                        description: incomeNote,
+                        description: incomeDesc,
                     }
                 )
                 .eq("id", id)
                 .eq("userid", userId);
-
-
 
             if (error) {
                 console.error("Supabase error:", error);
@@ -124,18 +117,17 @@ const EditIncomeForm: React.FC = () => {
             <div className={styles.formContainer}>
                 <AddEditForm
                     formTitle={"Edit Income"}
-                    noteName={"Description"}
-                    noteValue={incomeNote}
+                    descriptionName={"Description"}
+                    descriptionValue={incomeDesc}
                     amountName={"Amount"}
-                    amountValue={incomeAmount.toString()} // Muutetaan takaisin string-muoton. Jos ei ole undefined tämä on määritetty arvo 
+                    amountValue={incomeAmount.toString()}
                     buttonText={"Save Changes"}
-                    noteChange={handleNoteChange}
+                    noteChange={handleDescChange}
                     amountChange={handleAmountChange}
-                    selectChange={() => { }} // Selectin change. Not needed in Income
-                    onButtonClick={function (): void {
-                        throw new Error("Function not implemented."); // Tarvitaanko tätä?? Noo?
-                    }}
-                    onSubmit={submitFormIncome}
+                    selectChange={() => { } } 
+                    onButtonClick={() => { } }
+                    onSubmit={submitFormIncome} 
+                    selectValue={undefined}                
                 />
             </div>
         </div>
