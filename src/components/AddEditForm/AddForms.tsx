@@ -7,20 +7,18 @@ import supabase from "../../../supabase";
 
 const AddForms: React.FC = () => {
 
-    // Tilamuuttujat Income-lomakkeelle tietojen lähetykseen back-endille
-    const [incomeNote, setIncomeNote] = useState<string>("")
+    // UseStates for handeling Income-data
+    const [incomeDesc, setIncomeDesc] = useState<string>("")
     const [incomeAmount, setIncomeAmount] = useState<number>()
 
-    // Tilamuuttujat Expense-lomakkeelle tietojen lähetykseen back-endille
-    const [expenseNote, setExpenseNote] = useState<string>("")
+    // UseStates for handeling Expense-data
+    const [expenseDesc, setExpenseDesc] = useState<string>("")
     const [expenseAmount, setExpenseAmount] = useState<number>()
     const [selectCategory, setSelectCategory] = useState<number | undefined>(0)
 
     // Usestate for JWT token and users ID
     const [userToken, setUserToken] = useState<string | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
-
-
 
 
     // Check users JWT token
@@ -58,40 +56,41 @@ const AddForms: React.FC = () => {
     }, []);
 
     /* HANDLE FUNCTIONS */
-    // Funktio incomeNote-muuttujan päivittämiseen
-    const handleNoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setIncomeNote(e.target.value);
+
+    // Handle incomes Description-field changes
+    const handleDescChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setIncomeDesc(e.target.value);
     };
 
-    // Funktio incomeAmount-muuttujan päivittämiseen
+    // Handle incomes Amount-field changes
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // Muutetaan syötä numeeriseen muotoon
         const value = parseFloat(e.target.value);
         // Asetetaan undefined, jos syöte ei olekaan numeerisessa muodossa
         setIncomeAmount(isNaN(value) ? undefined : value);
     };
 
-    // Funktio expenseNote-muuttujan päivittämiseen
-    const handleExpenseNoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setExpenseNote(e.target.value);
+    // Handle expenses Description-field changes
+    const handleExpenseDescChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setExpenseDesc(e.target.value);
     };
 
-    // Funktio expenseAmount-muuttujan päivittämiseen
+    // Handle expenses Amount-field changes
     const handleExpenseAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // Muutetaan syötä numeeriseen muotoon
         const value = parseFloat(e.target.value);
         // Asetetaan undefined, jos syöte ei olekaan numeerisessa muodossa
         setExpenseAmount(isNaN(value) ? undefined : value);
     };
 
+    // Handle Select-field changes
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = parseInt(e.target.value); // Muutetaan valittu arvo numeroksi
+        const value = parseInt(e.target.value); 
         setSelectCategory(isNaN(value) ? undefined : value); // Asetetaan undefined, jos valinta ei ole luku
     };
 
 
+    /* CREATE EXPENSE */ 
     const submitFormExpense = async (e: React.FormEvent) => {
-        e.preventDefault(); // Estetään oletustoiminto
+        e.preventDefault(); 
 
         if (!userToken) {
             console.error("No user token found. Function can not be implemented.")
@@ -107,7 +106,7 @@ const AddForms: React.FC = () => {
                         userid: userId,
                         categoryid: selectCategory,
                         amount: expenseAmount,
-                        description: expenseNote,
+                        description: expenseDesc,
                         createdat: new Date(),
                     },
                 ]);
@@ -117,7 +116,7 @@ const AddForms: React.FC = () => {
             }
 
             // Empty data from the useStates
-            setExpenseNote("");
+            setExpenseDesc("");
             setExpenseAmount(undefined);
             setSelectCategory(undefined);
         } catch (error) {
@@ -126,10 +125,9 @@ const AddForms: React.FC = () => {
     };
 
 
-    // Funktio datan lähettämiseen back-endille Income-formin kautta
+    /* CREATE INCOME */ 
     const submitFormIncome = async (e: React.FormEvent) => {
 
-        // Ei sittenkään estetä sivun päivittämistä, sillä yläosan tiedot tulee päivittää
         e.preventDefault();
 
         if (!userToken) {
@@ -144,7 +142,7 @@ const AddForms: React.FC = () => {
                     {
                         userid: userId,
                         amount: incomeAmount,
-                        description: incomeNote,
+                        description: incomeDesc,
                         createdat: new Date(),
                     }
                 ]);
@@ -155,12 +153,11 @@ const AddForms: React.FC = () => {
 
                 // Empty states
                 setIncomeAmount(undefined);
-                setIncomeNote("");
+                setIncomeDesc("");
         } catch (error) {
             console.error("Error while adding expense: ", error);
         }
     };
-
 
 
     return (
@@ -169,40 +166,32 @@ const AddForms: React.FC = () => {
                 <AddEditForm
                     formTitle={"Expenses"}
                     descriptionName={"Description"}
-                    noteValue={expenseNote}
+                    descriptionValue={expenseDesc}
                     amountName={"Amount"}
                     amountValue={expenseAmount !== undefined ? expenseAmount.toString() : ""}
                     buttonText={"Add Expenses"}
-                    noteChange={handleExpenseNoteChange}
+                    noteChange={handleExpenseDescChange}
                     amountChange={handleExpenseAmountChange}
                     selectChange={handleSelectChange} // Selecting change
-                    onButtonClick={function (): void {
-                        throw new Error("Function not implemented.");
-                    } }
+                    onButtonClick={() => { } }
                     onSubmit={submitFormExpense} 
                     selectValue={selectCategory}                />
                 <AddEditForm
                     formTitle={"Income"}
                     descriptionName={"Description"}
-                    noteValue={incomeNote}
+                    descriptionValue={incomeDesc}
                     amountName={"Amount"}
-                    amountValue={incomeAmount !== undefined ? incomeAmount.toString() : ""} // Muutetaan takaisin string-muoton. Jos ei ole undefined tämä on määritetty arvo 
+                    amountValue={incomeAmount !== undefined ? incomeAmount.toString() : ""} 
                     buttonText={"Add Income"}
-                    noteChange={handleNoteChange}
+                    noteChange={handleDescChange}
                     amountChange={handleAmountChange}
-                    selectChange={() => { }} // Selectin change 
-                    onButtonClick={function (): void {
-                        throw new Error("Function not implemented."); // Tarvitaanko tätä??
-                    }}
+                    selectChange={() => { }} 
+                    onButtonClick={() => { } }
                     onSubmit={submitFormIncome}
                     selectValue={selectCategory}
                 />
-
-
             </div>
-
         </div>
-
     );
 }
 

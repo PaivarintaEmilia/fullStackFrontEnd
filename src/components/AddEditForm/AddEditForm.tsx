@@ -8,7 +8,7 @@ interface AddEditFormProps {
     formTitle: string;
     buttonText: string;
     descriptionName: string;
-    noteValue: string;
+    descriptionValue: string;
     amountName: string;
     amountValue: string;
     noteChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -23,7 +23,7 @@ interface AddEditFormProps {
 const AddEditForm: React.FC<AddEditFormProps> = ({
     formTitle,
     descriptionName,
-    noteValue,
+    descriptionValue,
     amountName,
     amountValue,
     buttonText,
@@ -35,12 +35,9 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
     onSubmit,
 }) => {
 
-    /* Select komponentin toiminnot, koska nämä pysyvät samana lomakkeelta toiselle*/
-
-    // Options tilan alustaminen
     const [options, setOptions] = useState<{ category_id: number; category_name: string }[]>([]); 
 
-
+    // Get Categories data for Expense-form
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -67,14 +64,14 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
 
     return (
         <div>
-            <div >
+            <div>
                 <form onSubmit={onSubmit}>
                     <h3>{formTitle}</h3>
                     <InputField
                         name={descriptionName}
                         type={"text"}
                         placeholder={"Note"}
-                        value={noteValue}
+                        value={descriptionValue}
                         className={"global-input"}
                         onChange={noteChange}
                     />

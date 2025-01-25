@@ -75,7 +75,7 @@ const Authentication: React.FC = () => {
         />
 
       </div>
-      {/* Login/Register error message */}
+      {/* Login error message */}
       <div className={style.errorContainer}>
         {error && <p className={style.error}>{error}</p>}
       </div>

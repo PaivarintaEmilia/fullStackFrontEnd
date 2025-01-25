@@ -16,7 +16,7 @@ const EditExpenseForm: React.FC = () => {
     console.log("Expense amount: ", amount);
     console.log("Expense categoryid: ", categoryid);
 
-    // Tilamuuttujat Income-lomakkeelle tietojen lähetykseen back-endille
+    // UseStates for editing an expense
     const [expenseDesc, setExpenseDesc] = useState<string>(description || "");
     const [expenseAmount, setExpenseAmount] = useState<number>(amount || 0);
     const [expenseCategory, setExpenseCategory] = useState<number>(categoryid || 0);
@@ -61,33 +61,30 @@ const EditExpenseForm: React.FC = () => {
     }, []);
 
     /* HANDLE FUNCTIONS */
-    // Funktio incomeNote-muuttujan päivittämiseen
-    const handleNoteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Handle expenses Description-field changes
+    const handleDescChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setExpenseDesc(e.target.value);
     };
 
-    // Funktio incomeAmount-muuttujan päivittämiseen
+    // Handle expenses Amount-field changes
     const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        // Muutetaan syötä numeeriseen muotoon
         const value = parseFloat(e.target.value);
         // Asetetaan undefined, jos syöte ei olekaan numeerisessa muodossa
         setExpenseAmount(value);
     };
 
-    // Function to handle select input changes
+    // Handle expenses Select-field changes
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = parseInt(e.target.value); // Muutetaan valittu arvo numeroksi
+        const value = parseInt(e.target.value); 
         setExpenseCategory(value); // Asetetaan undefined, jos valinta ei ole luku
     };
 
 
-
-    // Funktio datan lähettämiseen back-endille Income-formin kautta
+    /** EDIT EXPENSE */
     const submitFormExpense = async (e: React.FormEvent) => {
 
         console.log("Submit formin sisällä");
 
-        // Ei sittenkään estetä sivun päivittämistä, sillä yläosan tiedot tulee päivittää
         e.preventDefault();
 
         if (!userToken) {
@@ -114,12 +111,11 @@ const EditExpenseForm: React.FC = () => {
                 .eq("id", id)
                 .eq("userid", userId);
 
-
-
             if (error) {
                 console.error("Supabase error:", error);
                 throw error;
             };
+
             console.log("Submit formin sisällä navigation back to balance");
             navigate("/balance");
 
@@ -134,18 +130,17 @@ const EditExpenseForm: React.FC = () => {
                 <AddEditForm
                     formTitle={"Edit Expense"}
                     descriptionName={"Description"}
-                    noteValue={expenseDesc}
+                    descriptionValue={expenseDesc}
                     amountName={"Amount"}
-                    amountValue={expenseAmount.toString()} // Muutetaan takaisin string-muoton. Jos ei ole undefined tämä on määritetty arvo 
+                    amountValue={expenseAmount.toString()} 
                     buttonText={"Save Changes"}
-                    noteChange={handleNoteChange}
+                    noteChange={handleDescChange}
                     amountChange={handleAmountChange}
-                    selectChange={handleSelectChange} // Selectin change. Not needed in Income
-                    onButtonClick={function (): void {
-                        throw new Error("Function not implemented."); // Tarvitaanko tätä?? Noo?
-                    } }
+                    selectChange={handleSelectChange} 
+                    onButtonClick={() => { } }
                     onSubmit={submitFormExpense} 
-                    selectValue={expenseCategory}                />
+                    selectValue={expenseCategory}                
+                />
             </div>
         </div>
     );

@@ -31,7 +31,7 @@ const DataCardItemList: React.FC<DataCardItemListProps> = ({ items, onDelete, ty
         setHoveredItem(null);
     };
 
-
+    /** OPTIONS TO HANDLE EXPENSE OR INCOME TABLES EDIT */
     const handleEdit = (id: number, type: "incomes" | "expenses") => {
         console.log(`Edit item with id: ${id}`);
 
@@ -40,12 +40,11 @@ const DataCardItemList: React.FC<DataCardItemListProps> = ({ items, onDelete, ty
         if (selectedItem) {
             if (type === "incomes") {
                 navigate(`/edit-income`, { state: { ...selectedItem } });
-                console.log(`Navigation ok to edit income`);
+                console.log(`Navigation ok to edit income`, selectedItem);
             } else if (type === "expenses") {
                 navigate(`/edit-expense`, { state: { ...selectedItem } });
                 console.log(`Navigation ok to edit expense`, selectedItem);
             }
-
         }
     };
 
@@ -60,8 +59,8 @@ const DataCardItemList: React.FC<DataCardItemListProps> = ({ items, onDelete, ty
                 >
                     <div className={styles.itemTitleOptionContainer}>
 
-
                         <h4>{item.description}</h4>
+                        {/* On hover edit or delete options */}
                         {hoveredItem === item.id && (
                             <div className={styles.itemOptionsContainer}>
                                 <button onClick={() => handleEdit(item.id, type)}><EditIcon /></button>
@@ -70,10 +69,6 @@ const DataCardItemList: React.FC<DataCardItemListProps> = ({ items, onDelete, ty
                         )}
                     </div>
                     <p>{item.amount}€</p>
-
-
-
-
                 </div>
             ))}
         </>
