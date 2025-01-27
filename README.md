@@ -1,50 +1,178 @@
-# React + TypeScript + Vite
+Expense Tracker
+===============
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Overview
+--------
 
-Currently, two official plugins are available:
+Expense Tracker is a React and TypeScript-based application designed to help users manage their finances by tracking income and expenses. The application uses Supabase as the backend for authentication and data storage.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Features
+--------
 
-## Expanding the ESLint configuration
+*   **User Authentication**:
+    
+    *   Email and password registration/login.
+        
+    *   Google OAuth login.
+        
+*   **Expense Management**:
+    
+    *   Add, edit, and delete expenses.
+        
+    *   Categorize expenses by type.
+        
+*   **Income Management**:
+    
+    *   Add, edit, and delete income entries.
+        
+*   **Dashboard**:
+    
+    *   View total income, expenses, and balance.
+        
+    *   Monthly income and expense summaries.
+        
+*   **Data Filters**:
+    
+    *   View income and expense data filtered by month and year.
+        
+*   **Responsive Design**:
+    
+    *   Optimized for various devices.
+        
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Getting Started
+---------------
 
-- Configure the top-level `parserOptions` property like this:
+### Prerequisites
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+1.  Node.js (>= 16.x)
+    
+2.  npm or yarn
+    
+
+### Installation
+
+1.  Clone the repository:
+
+```
+git clone <repository-url>
+cd <repository-directory>
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2.  Install dependencies:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
 ```
+npm install
+```
+    
+3.  Configure environment variables:
+    
+    *   Create a `.env` file in the root directory based on the provided `.env.example`.
+        
+    *   Set up your Supabase project credentials.
+        
+
+### Running the Application
+
+    *   Start the development server:
+        
+```
+npm run dev
+```
+
+*   npm run dev
+    
+*   Open the app in your browser at `http://localhost:3000`.
+    
+
+### Building for Production
+
+*   Build the application:
+
+```
+npm run build
+```
+    
+*   Serve the production build:
+
+```
+npm run preview
+```
+
+
+Key Files
+---------
+
+### App.tsx
+
+Defines the main application structure and routes, including:
+
+*   `/`: Login page
+    
+*   `/register`: User registration page
+    
+*   `/home`: Dashboard for income and expense tracking
+    
+*   `/balance`: Detailed breakdown of income and expenses
+    
+*   `/edit-income`: Edit an income entry
+    
+*   `/edit-expense`: Edit an expense entry
+    
+
+### Authentication
+
+*   `Authentication.tsx`: Handles user login.
+    
+*   `Register.tsx`: Handles user registration.
+    
+
+### Expense and Income Management
+
+*   `EditIncome.tsx & EditExpense.tsx`: Pages for editing individual entries.
+    
+*   `AddForms.tsx`: Component for adding new income and expense entries.
+    
+*   `Balance.tsx`: Displays categorized and filtered income/expense data.
+    
+
+### Reusable Components
+
+*   Hero: Displays a banner with a title and subtitle.
+    
+*   NavContainer: Navigation buttons for switching between pages.
+    
+*   DataCard: Displays categorized data with options for deletion.
+    
+*   PopUp: Confirmation modal for deletion actions.
+    
+
+Dependencies
+------------
+
+Key dependencies used in the project include:
+
+*   `react`: For building user interfaces.
+    
+*   `react-router-dom`: For routing and navigation.
+    
+*   `@supabase/supabase-js`: For backend authentication and database interactions.
+    
+*   `@mui/material and @emotion/react`: For UI components and styling.
+    
+
+Future Improvements
+-------------------
+
+*   Add detailed analytics for spending habits.
+    
+*   Introduce notifications for upcoming bills or budget limits.
+    
+*   Create functionality to user to create expense categories.
+    
+
+License
+-------
+
+This project is licensed under the MIT License.
+
