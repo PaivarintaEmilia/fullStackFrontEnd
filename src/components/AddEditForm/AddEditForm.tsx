@@ -53,6 +53,8 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
                     categoryid: category.id,
                     categoryname: category.name
                 })));
+
+                
             } catch (error) {
                 console.error("Error fetching categories:", error);
             }
