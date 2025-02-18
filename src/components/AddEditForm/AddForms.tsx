@@ -85,6 +85,8 @@ const AddForms: React.FC = () => {
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const value = parseInt(e.target.value); 
         setSelectCategory(isNaN(value) ? undefined : value); // Asetetaan undefined, jos valinta ei ole luku
+        console.log("Selected category ID in handle function:", selectCategory);
+
     };
 
 
@@ -96,6 +98,9 @@ const AddForms: React.FC = () => {
             console.error("No user token found. Function can not be implemented.")
             return;
         }
+
+        console.log("Selected category ID in adding function:", selectCategory);
+
 
         try {
             // Add the new data to the database
@@ -115,7 +120,6 @@ const AddForms: React.FC = () => {
                 throw error;
             }
 
-            console.log("Selected category ID:", selectCategory);
 
             // Empty data from the useStates
             setExpenseDesc("");
