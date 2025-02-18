@@ -115,6 +115,8 @@ const AddForms: React.FC = () => {
                 throw error;
             }
 
+            console.log("Selected category ID:", selectCategory);
+
             // Empty data from the useStates
             setExpenseDesc("");
             setExpenseAmount(undefined);
