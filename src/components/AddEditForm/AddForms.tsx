@@ -14,7 +14,7 @@ const AddForms: React.FC = () => {
     // UseStates for handeling Expense-data
     const [expenseDesc, setExpenseDesc] = useState<string>("")
     const [expenseAmount, setExpenseAmount] = useState<number>()
-    const [selectCategory, setSelectCategory] = useState<number | undefined>(0)
+    const [selectCategory, setSelectCategory] = useState<number | undefined>(1)
 
     // Usestate for JWT token and users ID
     const [userToken, setUserToken] = useState<string | null>(null);
