@@ -35,7 +35,7 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
     onSubmit,
 }) => {
 
-    const [options, setOptions] = useState<{ category_id: number; category_name: string }[]>([]); 
+    const [options, setOptions] = useState<{ categoryid: number; categoryname: string }[]>([]); 
 
     // Get Categories data for Expense-form
     useEffect(() => {
@@ -50,8 +50,8 @@ const AddEditForm: React.FC<AddEditFormProps> = ({
                 }
     
                 setOptions(data.map((category) => ({
-                    category_id: category.id,
-                    category_name: category.name
+                    categoryid: category.id,
+                    categoryname: category.name
                 })));
             } catch (error) {
                 console.error("Error fetching categories:", error);

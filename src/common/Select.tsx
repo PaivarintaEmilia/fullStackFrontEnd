@@ -2,7 +2,7 @@ import React from "react";
 
 
 interface SelectProps {
-    options: { category_id: number; category_name: string }[];
+    options: { categoryid: number; categoryname: string }[];
     id: string;
     className: string,
     value: number | undefined,
@@ -15,8 +15,8 @@ const Select: React.FC<SelectProps> = ({ options, onChange, id, className, value
     return (
         <select onChange={onChange} value={value} id={id} className={className}>
             {options.map(option => (
-                <option key={option.category_id} value={option.category_id}>
-                    {option.category_name}
+                <option key={option.categoryid} value={option.categoryid}>
+                    {option.categoryname}
                 </option>
             ))}
         </select>
